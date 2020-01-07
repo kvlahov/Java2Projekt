@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.kvlahov;
+package com.kvlahov.client.login;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -11,24 +11,26 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
+import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 
 /**
+ * FXML Controller class
  *
- * @author evlakre
+ * @author lordo
  */
-public class MainFXMLDocumentController implements Initializable {
-    
+public class LoginFXMLDocumentController implements Initializable {
+
     @FXML
     private Label label;
-    
     @FXML
-    private TextField textField; 
-    
+    private TextField tfUsername;
     @FXML
-    private void handleButtonAction(ActionEvent event) {
-        System.out.println(textField.getText());
-        label.setText("Hello World!");
+    private PasswordField pfPassword;
+
+    @FXML
+    private void handleLoginClick(ActionEvent event){
+        
     }
     
     @Override

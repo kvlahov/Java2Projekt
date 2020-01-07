@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.kvlahov;
+package com.kvlahov.client;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -19,7 +19,7 @@ public class Main extends Application {
     
     @Override
     public void start(Stage stage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("MainFXMLDocument.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("LoginFXMLDocument.fxml"));
         
         Scene scene = new Scene(root);
         
