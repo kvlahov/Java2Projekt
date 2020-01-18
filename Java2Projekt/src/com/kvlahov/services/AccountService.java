@@ -6,6 +6,7 @@
 package com.kvlahov.services;
 
 import com.kvlahov.dal.repositories.IUserRepository;
+import com.kvlahov.dal.repositories.implementations.UserRepository;
 import com.kvlahov.model.User;
 import java.util.Optional;
 
@@ -23,14 +24,14 @@ public class AccountService {
 
     public Optional<User> loginUser(String username, String password) {
         if(isUserValid(username, password)){
-            return Optional.of(userRepository.findByUsername(username));
+            return userRepository.findByUsername(username);
         } else {
             return Optional.empty();
         }
     }
 
     private boolean isUserValid(String username, String password) {
-        Optional<User> user = Optional.of(userRepository.findByUsername(username));
+        Optional<User> user = userRepository.findByUsername(username);
         if(user.isPresent()) {
             return user.get().getPassword().equals(password);
         }

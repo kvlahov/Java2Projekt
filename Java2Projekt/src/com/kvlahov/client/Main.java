@@ -5,6 +5,12 @@
  */
 package com.kvlahov.client;
 
+import com.kvlahov.dal.repositories.IRepository;
+import com.kvlahov.dal.repositories.IUserRepository;
+import com.kvlahov.dal.repositories.implementations.UserRepository;
+import com.kvlahov.model.User;
+import com.kvlahov.model.enums.UserRoleEnum;
+import com.kvlahov.services.AccountService;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -19,7 +25,7 @@ public class Main extends Application {
     
     @Override
     public void start(Stage stage) throws Exception {
-        Parent root = FXMLLoader.load(getClass().getResource("LoginFXMLDocument.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("login/LoginFXMLDocument.fxml"));
         
         Scene scene = new Scene(root);
         

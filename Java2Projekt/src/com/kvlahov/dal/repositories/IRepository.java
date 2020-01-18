@@ -5,7 +5,7 @@
  */
 package com.kvlahov.dal.repositories;
 
-import com.kvlahov.model.IEntity;
+import java.util.Collection;
 import java.util.Optional;
 
 /**
@@ -13,9 +13,10 @@ import java.util.Optional;
  * @author lordo
  */
 public interface IRepository<T> {
-    Iterable<T> getAll();
+    Collection<T> getAll();
     Optional<T> getById(long id);
     void add(T entity);
     void update(long id, T newEntity);
     void delete(long id);
+    void saveChanges(Collection<T> allElements);
 }

@@ -6,11 +6,12 @@
 package com.kvlahov.dal.repositories;
 
 import com.kvlahov.model.User;
+import java.util.Optional;
 
 /**
  *
  * @author lordo
  */
 public interface IUserRepository extends IRepository<User>  {
-    User findByUsername(String username);
+    Optional<User> findByUsername(String username);
 }
