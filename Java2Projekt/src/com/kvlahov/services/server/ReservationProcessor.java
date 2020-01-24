@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -17,7 +18,7 @@ import java.util.logging.Logger;
  * @author evlakre
  */
 public class ReservationProcessor extends Thread {
-
+    private final Logger LOG = Logger.getLogger(ReservationProcessor.class.getName());
     private final Socket clientSocket;
     private final ObjectOutputStream outputStream;
     private final ObjectInputStream inputStream;
@@ -30,14 +31,35 @@ public class ReservationProcessor extends Thread {
 
     @Override
     public void run() {
-        close(clientSocket);
+        LOG.info( "Entered run...");
+        while(true) {
+            try {
+                String incomingMsg = inputStream.readUTF();
+                LOG.info("Received msg: " + incomingMsg);
+                
+                if(incomingMsg.equalsIgnoreCase("exit")) {
+                    LOG.info("Closing connection: ");
+                    clientSocket.close();
+                    inputStream.close();
+                    outputStream.close();
+                    break;
+                } else {
+                    int random = new Random().nextInt(100);
+                    LOG.info("Sending random int: " + random);
+                    outputStream.writeUTF(String.valueOf(random));
+                    outputStream.flush();
+                }
+            } catch (IOException ex) {
+                LOG.log(Level.SEVERE, null, ex);
+            }
+        }
     }
 
     private void close(Socket clientSocket) {
         try {
             clientSocket.close();
         } catch (IOException ex) {
-            Logger.getLogger(ReservationProcessor.class.getName()).log(Level.SEVERE, null, ex);
+            LOG.log(Level.SEVERE, null, ex);
         }
     }
 

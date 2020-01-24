@@ -20,16 +20,20 @@ import javax.naming.NamingException;
 public class Server {
 
     private static final Logger LOG = Logger.getLogger(Server.class.getName());
+
     public static void main(String[] args) {
         try {
             PropertiesManager pm = new PropertiesManager();
             ServerSocket s = new ServerSocket(pm.getServerPort());
             
-            LOG.info("Server waiting for client...");
-            Socket clientSocket = s.accept();
-            
-            new ReservationProcessor(clientSocket).start();
-            
+            while (true) {
+                LOG.info("Server waiting for client...");
+                Socket clientSocket = s.accept();
+
+                LOG.log(Level.INFO, "Accepting client {0}", clientSocket);
+
+                new ReservationProcessor(clientSocket).start();
+            }
         } catch (IOException ex) {
             LOG.log(Level.SEVERE, null, ex);
         } catch (NamingException ex) {

@@ -15,7 +15,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
-import javafx.scene.control.Button;
 import javafx.scene.layout.Pane;
 
 /**
@@ -31,7 +30,9 @@ public class HomeFXMLController implements Initializable {
     public void handleReservationsClick(ActionEvent event) {
 //        ((Pane)root.getParent()).getChildren().clear();
         try {
-            ((Pane)root.getParent()).getChildren().add(FXMLLoader.load(getClass().getResource("ConnectingToServerFXML.fxml")));
+            Pane caca = (Pane)root.getParent();
+            caca.getChildren().clear();
+            caca.getChildren().add(FXMLLoader.load(getClass().getResource("ConnectingToServerFXML.fxml")));
         } catch (IOException ex) {
             Logger.getLogger(HomeFXMLController.class.getName()).log(Level.SEVERE, null, ex);
         }
