@@ -5,7 +5,7 @@
  */
 package com.kvlahov.client.regular;
 
-import com.kvlahov.utilities.SceneHelper;
+import com.kvlahov.utilities.UIHelper;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.event.ActionEvent;
@@ -26,7 +26,7 @@ public class RegularFXMLDocumentController implements Initializable {
 
     @FXML
     public void handleLogoutClick(ActionEvent event) {
-        SceneHelper.switchScene((Node) event.getSource(), "login/LoginFXMLDocument.fxml");
+        UIHelper.switchScene((Node) event.getSource(), "login/LoginFXMLDocument.fxml");
     }
 
     @Override

@@ -9,7 +9,7 @@ import com.jfoenix.controls.JFXButton;
 import com.kvlahov.client.Main;
 import com.kvlahov.model.User;
 import com.kvlahov.services.AccountService;
-import com.kvlahov.utilities.SceneHelper;
+import com.kvlahov.utilities.UIHelper;
 import java.io.IOException;
 import java.net.URL;
 import java.util.Optional;
@@ -58,7 +58,7 @@ public class LoginFXMLDocumentController implements Initializable {
             //switch to main screen
             switch(user.get().getRole()) { 
                 case REGULAR:
-                    SceneHelper.switchScene((Node)event.getSource(), "regular/RegularFXMLDocument.fxml");
+                    UIHelper.switchScene((Node)event.getSource(), "regular/RegularFXMLDocument.fxml");
             }
             errorLabel.setVisible(false);
         } else {

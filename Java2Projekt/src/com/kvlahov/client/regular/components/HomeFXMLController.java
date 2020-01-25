@@ -5,6 +5,7 @@
  */
 package com.kvlahov.client.regular.components;
 
+import com.kvlahov.utilities.UIHelper;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -29,13 +30,7 @@ public class HomeFXMLController implements Initializable {
     @FXML
     public void handleReservationsClick(ActionEvent event) {
 //        ((Pane)root.getParent()).getChildren().clear();
-        try {
-            Pane caca = (Pane)root.getParent();
-            caca.getChildren().clear();
-            caca.getChildren().add(FXMLLoader.load(getClass().getResource("ConnectingToServerFXML.fxml")));
-        } catch (IOException ex) {
-            Logger.getLogger(HomeFXMLController.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        UIHelper.switchComponent(root, this.getClass(), "ConnectingToServerFXML.fxml");
     }
     
     @FXML

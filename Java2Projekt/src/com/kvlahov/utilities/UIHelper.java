@@ -14,17 +14,18 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 /**
  *
  * @author evlakre
  */
-public class SceneHelper {
-    
-    public static void switchScene(Node node, String fxml){
+public class UIHelper {
+
+    public static void switchScene(Node node, String fxml) {
         try {
-            Stage stage = (Stage)node.getScene().getWindow();
+            Stage stage = (Stage) node.getScene().getWindow();
             Parent root = FXMLLoader.load(Main.class.getResource(fxml));
             Scene scene = new Scene(root);
             stage.setScene(scene);
@@ -33,6 +34,16 @@ public class SceneHelper {
             stage.centerOnScreen();
         } catch (IOException ex) {
             Logger.getLogger(LoginFXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    public static void switchComponent(Node root, Class resourceRootClass ,String componentFxml) {
+        try {
+            Pane parent = (Pane) root.getParent();
+            parent.getChildren().clear();
+            parent.getChildren().add(FXMLLoader.load(resourceRootClass.getResource("ConnectingToServerFXML.fxml")));
+        } catch (IOException ex) {
+            Logger.getLogger(UIHelper.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 }
