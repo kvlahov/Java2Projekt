@@ -3,15 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.kvlahov.model;
+package com.kvlahov.dal.repositories;
 
-import java.io.Serializable;
+import com.kvlahov.model.Receipt;
 
 /**
  *
- * @author lordo
+ * @author evlakre
  */
-public interface IEntity extends Serializable{
-    long getId();
-    void setId(long id);
+public interface IReceiptRepository extends IRepository<Receipt>{
+    
 }

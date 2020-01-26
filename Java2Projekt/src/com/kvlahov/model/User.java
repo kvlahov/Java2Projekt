@@ -12,7 +12,9 @@ import java.io.Serializable;
  *
  * @author lordo
  */
-public class User implements IEntity, Serializable{
+public class User implements IEntity, Serializable {
+    private static final long serialVersionUID = 1L;
+
     private long id;
     private String username;
     private String password;
@@ -26,7 +28,7 @@ public class User implements IEntity, Serializable{
         this.password = password;
         this.role = UserRoleEnum.REGULAR;
     }
-    
+
     public User(String username, String password, UserRoleEnum role) {
         this.username = username;
         this.password = password;
@@ -69,20 +71,17 @@ public class User implements IEntity, Serializable{
 
     @Override
     public String toString() {
-        return "User: "+ username;
+        return "User: " + username;
     }
 
     @Override
     public boolean equals(Object obj) {
-        if(obj instanceof User) {
+        if (obj instanceof User) {
             User other = ((User) obj);
-            return other.id == this.id || 
-                    other.username.equals(this.username);
+            return other.id == this.id
+                    || other.username.equals(this.username);
         }
         return false;
     }
-    
-    
-        
-    
+
 }

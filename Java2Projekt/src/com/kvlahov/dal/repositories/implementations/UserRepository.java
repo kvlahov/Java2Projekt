@@ -16,7 +16,6 @@ import java.util.stream.Stream;
  */
 public class UserRepository extends FileGenericRepository<User> implements IUserRepository{
     private static final String FILE = ".\\data\\users.ser";
-    private static int idCounter = 1;
     public UserRepository() {
         super(FILE);
     }

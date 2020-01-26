@@ -26,11 +26,16 @@ public class PropertiesManager {
 
     private static final String PROPS_ROOT = "file:data/properties/";
     private static final String PROPS_FILE = "properties.props";
+    private static final Logger LOG = Logger.getLogger(PropertiesManager.class.getName());
 
     private File file;
 
-    public PropertiesManager() throws NamingException {
-        initJNDI();
+    public PropertiesManager(){
+        try {
+            initJNDI();
+        } catch (NamingException ex) {
+            LOG.log(Level.SEVERE, null, ex);
+        }
     }
 
     private void initJNDI() throws NamingException {
@@ -47,12 +52,12 @@ public class PropertiesManager {
 
     public String getProperty(String key) {
         Properties props = new Properties();
-        try {
-            props.load(new FileInputStream(file));
+        try(FileInputStream fis = new FileInputStream(file)) {
+            props.load(fis);
         } catch (FileNotFoundException ex) {
-            Logger.getLogger(PropertiesManager.class.getName()).log(Level.SEVERE, null, ex);
+            LOG.log(Level.SEVERE, null, ex);
         } catch (IOException ex) {
-            Logger.getLogger(PropertiesManager.class.getName()).log(Level.SEVERE, null, ex);
+            LOG.log(Level.SEVERE, null, ex);
         }
         return props.getProperty(key);
     }
@@ -63,6 +68,10 @@ public class PropertiesManager {
     
     public String getServerUrl() {
         return getProperty("server.url");
+    }
+    
+    public String getDateFormat() {
+        return getProperty("date.format");
     }
 
 }

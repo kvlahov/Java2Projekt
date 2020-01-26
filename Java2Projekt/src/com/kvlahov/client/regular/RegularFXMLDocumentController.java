@@ -28,10 +28,15 @@ public class RegularFXMLDocumentController implements Initializable {
     public void handleLogoutClick(ActionEvent event) {
         UIHelper.switchScene((Node) event.getSource(), "login/LoginFXMLDocument.fxml");
     }
+    
+    @FXML 
+    public void handleHomeClick(ActionEvent event) {
+        UIHelper.switchComponent(container, this.getClass(), "HomeFXML.fxml");
+    }
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+        UIHelper.switchComponent(container, this.getClass(), "HomeFXML.fxml");
     }
 
 }

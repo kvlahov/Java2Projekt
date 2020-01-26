@@ -15,8 +15,10 @@ import java.util.Optional;
 public interface IRepository<T> {
     Collection<T> getAll();
     Optional<T> getById(long id);
-    void add(T entity);
+    long add(T entity);
+    void addRange(Collection<T> entities);
     void update(long id, T newEntity);
     void delete(long id);
+    void deleteAll();
     void saveChanges(Collection<T> allElements);
 }

@@ -11,7 +11,6 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.naming.NamingException;
 
 /**
  *
@@ -35,8 +34,6 @@ public class Server {
                 new ReservationProcessor(clientSocket).start();
             }
         } catch (IOException ex) {
-            LOG.log(Level.SEVERE, null, ex);
-        } catch (NamingException ex) {
             LOG.log(Level.SEVERE, null, ex);
         }
     }

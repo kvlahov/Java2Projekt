@@ -14,6 +14,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
@@ -37,11 +38,15 @@ public class UIHelper {
         }
     }
 
-    public static void switchComponent(Node root, Class resourceRootClass ,String componentFxml) {
+    public static void switchComponent(Pane root, Class resourceRootClass, String componentFxml) {
         try {
-            Pane parent = (Pane) root.getParent();
-            parent.getChildren().clear();
-            parent.getChildren().add(FXMLLoader.load(resourceRootClass.getResource("ConnectingToServerFXML.fxml")));
+            root.getChildren().clear();
+            Node node = (Node)FXMLLoader.load(resourceRootClass.getResource(componentFxml));
+            AnchorPane.setTopAnchor(node, 0.0);
+            AnchorPane.setRightAnchor(node, 0.0);
+            AnchorPane.setBottomAnchor(node, 0.0);
+            AnchorPane.setLeftAnchor(node, 0.0);
+            root.getChildren().add(node);
         } catch (IOException ex) {
             Logger.getLogger(UIHelper.class.getName()).log(Level.SEVERE, null, ex);
         }

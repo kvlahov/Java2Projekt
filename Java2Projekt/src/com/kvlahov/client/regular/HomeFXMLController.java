@@ -3,17 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.kvlahov.client.regular.components;
+package com.kvlahov.client.regular;
 
 import com.kvlahov.utilities.UIHelper;
-import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.layout.Pane;
@@ -24,33 +21,35 @@ import javafx.scene.layout.Pane;
  * @author evlakre
  */
 public class HomeFXMLController implements Initializable {
+
+    private static final Logger LOG = Logger.getLogger(HomeFXMLController.class.getName());
+
     @FXML
     private Node root;
-            
+
     @FXML
     public void handleReservationsClick(ActionEvent event) {
-//        ((Pane)root.getParent()).getChildren().clear();
-        UIHelper.switchComponent(root, this.getClass(), "ConnectingToServerFXML.fxml");
+        UIHelper.switchComponent((Pane) root.getParent(), this.getClass(), "reservations/ConnectingToServerFXML.fxml");
     }
-    
+
     @FXML
     public void handleRegistryClick(ActionEvent event) {
-
+        UIHelper.switchComponent((Pane) root.getParent(), this.getClass(), "registry/RegistryFXML.fxml");
     }
 
     @FXML
     public void handleInventoryClick(ActionEvent event) {
-
+        LOG.info("Inventory clicked");
     }
 
     @FXML
     public void handleReceiptsClick(ActionEvent event) {
-
+        LOG.info("Receipts clicked");
     }
-            
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         // TODO
-    }    
-    
+    }
+
 }

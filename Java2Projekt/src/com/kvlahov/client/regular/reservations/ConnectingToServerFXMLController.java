@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.kvlahov.client.regular.components;
+package com.kvlahov.client.regular.reservations;
 
 import com.kvlahov.services.ReservationService;
 import java.io.IOException;
@@ -58,7 +58,6 @@ public class ConnectingToServerFXMLController implements Initializable {
                 }
             } catch (IOException | IllegalArgumentException ex) {
                 handleFailedServerConnection();
-                ex.printStackTrace();
             }
         });
         thread.start();

@@ -26,13 +26,8 @@ public class ReservationService {
 
     public boolean connectToServer() throws IOException, IllegalArgumentException {
 
-        PropertiesManager pm = null;
 
-        try {
-            pm = new PropertiesManager();
-        } catch (NamingException ex) {
-            Logger.getLogger(ReservationService.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        PropertiesManager pm = new PropertiesManager();
 
         if (pm == null) {
             return false;
@@ -65,12 +60,11 @@ public class ReservationService {
 //                LOG.log(Level.SEVERE, null, ex);
 //            }
 //        }).start();
-
         return true;
     }
-    
+
     public void sendMessage(String message) {
-        
+
     }
 
 }

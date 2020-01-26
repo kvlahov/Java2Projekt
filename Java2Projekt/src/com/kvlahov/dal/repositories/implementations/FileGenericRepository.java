@@ -20,10 +20,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
-/**
- *
- * @author lordo
- */
 public class FileGenericRepository<T extends IEntity> implements IRepository<T> {
 
     private final String filename;
@@ -44,7 +40,7 @@ public class FileGenericRepository<T extends IEntity> implements IRepository<T> 
         try (ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream(filename))) {
             return ((Collection<T>) inputStream.readObject())
                     .stream()
-                    .sorted((o, o2) -> Long.compare(o.getId(),o2.getId()))
+                    .sorted((o, o2) -> Long.compare(o.getId(), o2.getId()))
                     .collect(Collectors.toList());
         } catch (Exception e) {
             Logger.getLogger(FileGenericRepository.class.getName()).log(Level.SEVERE, null, e);
@@ -64,13 +60,36 @@ public class FileGenericRepository<T extends IEntity> implements IRepository<T> 
     }
 
     @Override
-    public void add(T entity) {
+    public long add(T entity) {
         Collection<T> allElements = getAll();
         long entityId = allElements.stream().mapToLong(el -> el.getId()).max().orElse(0) + 1;
-        entity.setId(entityId);
-        if (!allElements.contains(entity)) {
-            allElements.add(entity);
+
+        if (addToCollection(entity, entityId, allElements)) {
+            saveChanges(allElements);
+
+            return entityId;
         }
+        return -1;
+    }
+
+    private boolean addToCollection(T entity, long entityId, Collection<T> allElements) {
+        if (!allElements.contains(entity)) {
+            entity.setId(entityId);
+            allElements.add(entity);
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public void addRange(Collection<T> entities) {
+        Collection<T> allElements = getAll();
+        long startId = allElements.stream().mapToLong(el -> el.getId()).max().orElse(0) + 1;
+
+        for (T entity : entities) {
+            addToCollection(entity, startId++, allElements);
+        }
+
         saveChanges(allElements);
     }
 
@@ -87,6 +106,13 @@ public class FileGenericRepository<T extends IEntity> implements IRepository<T> 
     public void delete(long id) {
         Collection<T> allElements = getAll();
         allElements.removeIf(o -> o.getId() == id);
+        saveChanges(allElements);
+    }
+
+    @Override
+    public void deleteAll() {
+        Collection<T> allElements = getAll();
+        allElements.clear();
         saveChanges(allElements);
     }
 

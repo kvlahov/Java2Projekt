@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXButton?>
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.input.KeyCodeCombination?>
+<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.VBox?>
 
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="0.0" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.kvlahov.client.regular.RegularFXMLDocumentController">
     <top>
@@ -15,9 +17,13 @@
                 <MenuBar prefHeight="60.0" prefWidth="543.0" HBox.hgrow="ALWAYS">
                     <menus>
                         <Menu mnemonicParsing="false" text="File">
-                            <items>
-                                <MenuItem mnemonicParsing="false" text="Close" />
-                            </items>
+                     <items>
+                        <MenuItem mnemonicParsing="false" onAction="#handleHomeClick" text="Home">
+                           <accelerator>
+                              <KeyCodeCombination alt="UP" code="H" control="DOWN" meta="UP" shift="UP" shortcut="UP" />
+                           </accelerator>
+                        </MenuItem>
+                     </items>
                         </Menu>
                         <Menu mnemonicParsing="false" text="Edit">
                             <items>
@@ -36,8 +42,10 @@
         </HBox>
     </top>
     <center>
-        <VBox fx:id="container" alignment="CENTER">
-            <fx:include fx:id="fooTabPage" source="components/HomeFXML.fxml" />
-        </VBox>
+        <AnchorPane fx:id="container">
+         <padding>
+            <Insets bottom="10.0" left="30.0" right="30.0" top="10.0" />
+         </padding>
+        </AnchorPane>
     </center>
 </BorderPane>
