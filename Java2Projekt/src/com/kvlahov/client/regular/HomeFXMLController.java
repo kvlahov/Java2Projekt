@@ -5,6 +5,7 @@
  */
 package com.kvlahov.client.regular;
 
+import com.kvlahov.client.Main;
 import com.kvlahov.utilities.UIHelper;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -44,12 +45,13 @@ public class HomeFXMLController implements Initializable {
 
     @FXML
     public void handleReceiptsClick(ActionEvent event) {
-        LOG.info("Receipts clicked");
+        UIHelper.switchComponent((Pane) root, this.getClass(), "receipts/ReceiptsFXML.fxml");
     }
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
+//        String css = Main.class.getResource("/com/kvlahov/resources/registryStyle.css").toExternalForm();
+//        root.getScene().getStylesheets().add(css);
     }
 
 }

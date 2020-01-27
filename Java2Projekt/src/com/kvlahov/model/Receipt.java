@@ -18,6 +18,14 @@ public class Receipt implements IEntity {
     private LocalDate dateCreated;
     private User createdByUser;
 
+    public Receipt() {
+    }
+
+    public Receipt(LocalDate dateCreated, User createdByUser) {
+        this.dateCreated = dateCreated;
+        this.createdByUser = createdByUser;
+    }    
+    
     @Override
     public long getId() {
         return this.id;
@@ -44,4 +52,32 @@ public class Receipt implements IEntity {
         this.createdByUser = createdByUser;
     }
 
+    @Override
+    public int hashCode() {
+        int hash = 3;
+        hash = 79 * hash + (int) (this.id ^ (this.id >>> 32));
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Receipt other = (Receipt) obj;
+        if (this.id != other.id) {
+            return false;
+        }
+        return true;
+    }
+
+    
+
+    
 }

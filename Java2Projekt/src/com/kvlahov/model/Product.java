@@ -5,6 +5,8 @@
  */
 package com.kvlahov.model;
 
+import java.util.Objects;
+
 /**
  *
  * @author evlakre
@@ -72,6 +74,14 @@ public class Product implements IEntity {
                     || other.name.equals(this.name);
         }
         return false;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 43 * hash + (int) (this.id ^ (this.id >>> 32));
+        hash = 43 * hash + Objects.hashCode(this.name);
+        return hash;
     }
 
 }

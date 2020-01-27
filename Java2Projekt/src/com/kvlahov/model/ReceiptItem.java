@@ -5,6 +5,8 @@
  */
 package com.kvlahov.model;
 
+import java.util.Objects;
+
 /**
  *
  * @author evlakre
@@ -22,6 +24,7 @@ public class ReceiptItem implements IEntity{
         this.product = product;
         this.amount = amount;
         this.discount = discount;
+        this.receipt = new Receipt();
     }
     
     @Override
@@ -73,6 +76,24 @@ public class ReceiptItem implements IEntity{
         
         return 0;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if(obj instanceof ReceiptItem) {
+            ReceiptItem other = (ReceiptItem)obj;
+            return this.getId() == other.id || (this.getProduct().equals(other.product) && this.getReceipt().getId() == other.getReceipt().getId());
+        }
+        return false;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 5;
+        hash = 97 * hash + (int) (this.id ^ (this.id >>> 32));
+        hash = 97 * hash + Objects.hashCode(this.product);
+        return hash;
+    }
+    
     
     
 }
