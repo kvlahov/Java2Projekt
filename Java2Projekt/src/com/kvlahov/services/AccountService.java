@@ -5,8 +5,11 @@
  */
 package com.kvlahov.services;
 
+import com.kvlahov.dal.repositories.IRepository;
 import com.kvlahov.dal.repositories.IUserRepository;
+import com.kvlahov.dal.repositories.implementations.RegistryUserRepository;
 import com.kvlahov.dal.repositories.implementations.UserRepository;
+import com.kvlahov.model.RegistryUser;
 import com.kvlahov.model.User;
 import java.util.Optional;
 
@@ -17,9 +20,11 @@ import java.util.Optional;
 public class AccountService {
     
     private IUserRepository userRepository;
+    private IRepository<RegistryUser> registryUserRepository;
 
     public AccountService() {
         this.userRepository = new UserRepository();
+        this.registryUserRepository = new RegistryUserRepository();
     }
 
     public Optional<User> loginUser(String username, String password) {
@@ -35,6 +40,11 @@ public class AccountService {
         if(user.isPresent()) {
             return user.get().getPassword().equals(password);
         }
-        return true;
+        return false;
+    }
+    
+    public Optional<RegistryUser> loginRegistryUser(long pin) {
+        Optional<RegistryUser> registryUser = registryUserRepository.getAll().stream().filter(ru -> ru.getPin() == pin).findFirst();
+        return registryUser;
     }
 }

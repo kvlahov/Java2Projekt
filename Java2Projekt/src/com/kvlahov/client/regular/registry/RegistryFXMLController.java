@@ -7,10 +7,19 @@ package com.kvlahov.client.regular.registry;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTabPane;
+import com.kvlahov.client.Main;
+import com.kvlahov.client.regular.HomeFXMLController;
 import com.kvlahov.model.Category;
 import com.kvlahov.model.Receipt;
 import com.kvlahov.model.ReceiptItem;
+import com.kvlahov.model.RegistryUser;
+import com.kvlahov.model.interfaces.IControllerWithModel;
 import com.kvlahov.services.RegistryService;
+import com.kvlahov.utilities.UIHelper;
+import com.sun.glass.ui.Application;
+import com.sun.glass.ui.Robot;
+import java.awt.event.KeyEvent;
+import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
 import java.util.List;
@@ -19,6 +28,7 @@ import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
+import javafx.application.Platform;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
@@ -26,9 +36,13 @@ import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
@@ -37,8 +51,12 @@ import javafx.scene.control.Tab;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.FlowPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.text.TextAlignment;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 
 /**
  * FXML Controller class
@@ -49,6 +67,8 @@ public class RegistryFXMLController implements Initializable {
 
     private static final Logger LOG = Logger.getLogger(RegistryFXMLController.class.getName());
 
+    @FXML
+    private Pane root;
     @FXML
     private TableView<ReceiptItem> tableView;
     @FXML
@@ -61,6 +81,8 @@ public class RegistryFXMLController implements Initializable {
     private TableColumn<ReceiptItem, Double> discountNameColumn;
     @FXML
     private TableColumn<ReceiptItem, Double> totalColumn;
+    @FXML
+    private Label registryUserLabel;
 
     @FXML
     private JFXTabPane tabPaneCategories;
@@ -70,6 +92,7 @@ public class RegistryFXMLController implements Initializable {
 
     private ObservableList<ReceiptItem> receiptItems;
     private RegistryService registryService;
+    private RegistryUser user;
 
     @FXML
     public void handleRemoveClick(ActionEvent event) {
@@ -105,8 +128,14 @@ public class RegistryFXMLController implements Initializable {
         receiptItems.clear();
     }
 
+    @FXML
+    public void handleSwitchUserClick(ActionEvent event) {
+        handleUserLogin();
+    }
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
+        handleUserLogin();
         registryService = new RegistryService();
         receiptItems = FXCollections.observableArrayList();
 
@@ -172,17 +201,53 @@ public class RegistryFXMLController implements Initializable {
     }
 
     private void saveReceipt() {
-        Map<ReceiptItem, Integer> collect = receiptItems.stream().collect(Collectors.groupingBy(i -> i, Collectors.summingInt(i -> i.getAmount())));
-        
-        for (ReceiptItem receiptItem : collect.keySet()) {
-            LOG.info(receiptItem.getProduct().getName());
-            LOG.info(String.valueOf(collect.get(receiptItem)));
+        if (receiptItems.isEmpty()) {
+            return;
         }
-        
-        collect.forEach((k,v) -> k.setAmount(v));
-        List<ReceiptItem> receiptItems = collect.keySet().stream().map(k -> k).collect(Collectors.toList());
-        Receipt receipt = new Receipt(LocalDate.now(), null);
-        registryService.insertReceipt(receipt, receiptItems);
+
+        Map<ReceiptItem, Integer> collect = receiptItems.stream().collect(Collectors.groupingBy(i -> i, Collectors.summingInt(i -> i.getAmount())));
+
+        collect.forEach((k, v) -> k.setAmount(v));
+
+        List<ReceiptItem> items = collect.keySet().stream().map(k -> k).collect(Collectors.toList());
+        Receipt receipt = new Receipt(LocalDate.now(), user);
+        registryService.insertReceipt(receipt, items);
+    }
+
+    private IControllerWithModel showDialog() {
+        try {
+            FXMLLoader loader = new FXMLLoader(this.getClass().getResource("RegistryUserLoginFXML.fxml"));
+            Parent pane = loader.load();
+            Scene scene = new Scene(pane);
+            Stage dialog = new Stage();
+            RegistryUserLoginFXMLController controller = (RegistryUserLoginFXMLController) loader.getController();
+
+            dialog.setScene(scene);
+            dialog.initOwner(Main.getStage());
+            dialog.initModality(Modality.WINDOW_MODAL);
+            dialog.showAndWait();
+            return controller;
+        } catch (IOException ex) {
+            Logger.getLogger(RegistryFXMLController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+
+    }
+
+    private void handleUserLogin() {
+        IControllerWithModel<RegistryUser> controller = showDialog();
+        if (controller.getModel() == null) {
+            Robot r = Application.GetApplication().createRobot();
+            r.keyPress(KeyEvent.VK_CONTROL);
+            r.keyPress(KeyEvent.VK_H);
+            
+            r.keyRelease(KeyEvent.VK_CONTROL);
+            r.keyRelease(KeyEvent.VK_H);
+//            UIHelper.switchComponent((Pane)root.getParent(), HomeFXMLController.class, "HomeFXML.fxml");
+        } else {
+            user = controller.getModel();
+            registryUserLabel.setText(user.getUsername());
+        }
     }
 
 }

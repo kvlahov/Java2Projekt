@@ -16,12 +16,12 @@ public class Receipt implements IEntity {
 
     private long id;
     private LocalDate dateCreated;
-    private User createdByUser;
+    private RegistryUser createdByUser;
 
     public Receipt() {
     }
 
-    public Receipt(LocalDate dateCreated, User createdByUser) {
+    public Receipt(LocalDate dateCreated, RegistryUser createdByUser) {
         this.dateCreated = dateCreated;
         this.createdByUser = createdByUser;
     }    
@@ -44,11 +44,11 @@ public class Receipt implements IEntity {
         this.dateCreated = dateCreated;
     }
 
-    public User getCreatedByUser() {
+    public RegistryUser getCreatedByUser() {
         return createdByUser;
     }
 
-    public void setCreatedByUser(User createdByUser) {
+    public void setCreatedByUser(RegistryUser createdByUser) {
         this.createdByUser = createdByUser;
     }
 
@@ -75,6 +75,10 @@ public class Receipt implements IEntity {
             return false;
         }
         return true;
+    }
+
+    public String getUserName() {
+        return this.createdByUser != null ? createdByUser.getUsername() : "<No user>";
     }
 
     

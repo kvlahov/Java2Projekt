@@ -7,6 +7,10 @@ package com.kvlahov.utilities;
 
 import com.kvlahov.client.Main;
 import com.kvlahov.client.login.LoginFXMLDocumentController;
+import com.kvlahov.client.regular.receipts.ReceiptPreviewFXMLController;
+import com.kvlahov.client.regular.receipts.ReceiptsFXMLController;
+import com.kvlahov.model.Receipt;
+import com.kvlahov.model.interfaces.IControllerWithModel;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -42,13 +46,48 @@ public class UIHelper {
         try {
             root.getChildren().clear();
             Node node = (Node)FXMLLoader.load(resourceRootClass.getResource(componentFxml));
-            AnchorPane.setTopAnchor(node, 0.0);
-            AnchorPane.setRightAnchor(node, 0.0);
-            AnchorPane.setBottomAnchor(node, 0.0);
-            AnchorPane.setLeftAnchor(node, 0.0);
+            fitToParent(node);
             root.getChildren().add(node);
         } catch (IOException ex) {
             Logger.getLogger(UIHelper.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+    
+    public static<TModel> void switchComponentSetModel(Pane root, Class resourceRootClass, String componentFxml, TModel model) {
+        try {
+            root.getChildren().clear();
+            FXMLLoader loader = new FXMLLoader(resourceRootClass.getResource(componentFxml));
+            Node node = (Node)loader.load();
+            IControllerWithModel controller = (IControllerWithModel) loader.getController();
+            controller.setModel(model);
+            
+            fitToParent(node);
+            
+            root.getChildren().add(node);
+        } catch (IOException ex) {
+            Logger.getLogger(UIHelper.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+//    public static void switchComponentSetModel(Pane root, Class resourceRootClass, String componentFxml, Receipt model) {
+//        try {
+//            root.getChildren().clear();
+//            FXMLLoader loader = new FXMLLoader(resourceRootClass.getResource(componentFxml));
+//            Node node = (Node)loader.load();
+//            ReceiptPreviewFXMLController controller = (ReceiptPreviewFXMLController) loader.getController();
+//            controller.setModel(model);
+//            
+//            fitToParent(node);
+//            
+//            root.getChildren().add(node);
+//        } catch (IOException ex) {
+//            Logger.getLogger(UIHelper.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+//    }
+    private static void fitToParent(Node node) {
+        AnchorPane.setTopAnchor(node, 0.0);
+        AnchorPane.setRightAnchor(node, 0.0);
+        AnchorPane.setBottomAnchor(node, 0.0);
+        AnchorPane.setLeftAnchor(node, 0.0);
     }
 }

@@ -29,7 +29,10 @@ public class FileGenericRepository<T extends IEntity> implements IRepository<T> 
 
         File dataFile = new File(filename);
         try {
-            dataFile.createNewFile();
+            if(!dataFile.exists()) {
+                dataFile.createNewFile();
+                initEmptyFile();                
+            }
         } catch (IOException ex) {
             Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, null, ex);
         }
@@ -123,6 +126,10 @@ public class FileGenericRepository<T extends IEntity> implements IRepository<T> 
         } catch (Exception e) {
             Logger.getLogger(FileGenericRepository.class.getName()).log(Level.SEVERE, null, e);
         }
+    }
+
+    private void initEmptyFile() {
+        saveChanges(new ArrayList<T>());
     }
 
 }

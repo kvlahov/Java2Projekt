@@ -9,9 +9,11 @@ import com.kvlahov.dal.repositories.IRepository;
 import com.kvlahov.dal.repositories.IUserRepository;
 import com.kvlahov.dal.repositories.implementations.CategoryRepository;
 import com.kvlahov.dal.repositories.implementations.ProductRepository;
+import com.kvlahov.dal.repositories.implementations.RegistryUserRepository;
 import com.kvlahov.dal.repositories.implementations.UserRepository;
 import com.kvlahov.model.Category;
 import com.kvlahov.model.Product;
+import com.kvlahov.model.RegistryUser;
 import com.kvlahov.model.User;
 import com.kvlahov.model.enums.UserRoleEnum;
 import com.kvlahov.services.AccountService;
@@ -23,6 +25,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import javafx.stage.Window;
 
 /**
  *
@@ -30,8 +33,17 @@ import javafx.stage.Stage;
  */
 public class Main extends Application {
 
+    private static Stage stage;
+
+    public static Window getStage() {
+        return stage;
+    }
+
+    
+
     @Override
     public void start(Stage stage) throws Exception {
+        this.stage = stage;
         Parent root = FXMLLoader.load(getClass().getResource("login/LoginFXMLDocument.fxml"));
 
         Scene scene = new Scene(root);
@@ -46,6 +58,7 @@ public class Main extends Application {
     public static void main(String[] args) {
         launch(args);
         //createCategoriesAndProducts();
+//        createRegistryUsers();
 //        testData();
     }
 
@@ -94,14 +107,23 @@ public class Main extends Application {
         products.add(new Product("Zlatni Medvjed", 15, beer));
         products.add(new Product("Grička Vještica", 15, beer));
         products.add(new Product("Paulaner", 15, beer));
-        
+
         productRepository.addRange(products);
+    }
+    
+    private static void createRegistryUsers() {
+        RegistryUserRepository registryUserRepo = new RegistryUserRepository();
+        
+        registryUserRepo.add(new RegistryUser(123, "Pero"));
+        registryUserRepo.add(new RegistryUser(456, "Marko"));
+        registryUserRepo.add(new RegistryUser(789, "Mirko"));
     }
 
     private static void testData() {
+        RegistryUserRepository registryUserRepo = new RegistryUserRepository();
         CategoryRepository categoryRepository = new CategoryRepository();
         ProductRepository productRepository = new ProductRepository();
-        
-        productRepository.getAll().forEach(c -> System.out.println(c));
+
+        registryUserRepo.getAll().forEach(c -> System.out.println(c));
     }
 }

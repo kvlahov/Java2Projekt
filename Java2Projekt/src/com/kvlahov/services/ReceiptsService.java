@@ -10,6 +10,7 @@ import com.kvlahov.dal.repositories.IReceiptRepository;
 import com.kvlahov.dal.repositories.implementations.ReceiptItemRepository;
 import com.kvlahov.dal.repositories.implementations.ReceiptRepository;
 import com.kvlahov.model.Receipt;
+import com.kvlahov.model.ReceiptItem;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -31,6 +32,14 @@ public class ReceiptsService {
     
     public List<Receipt> getReceipts() {
         return receiptRepo.getAll().stream().collect(Collectors.toList());
+    }
+    
+    public List<ReceiptItem> getReceiptItemsForReceipt(Receipt receipt) {
+        return receiptItemRepo
+                .getAll()
+                .stream()
+                .filter(ri -> ri.getReceipt().equals(receipt))
+                .collect(Collectors.toList());
     }
     
 }

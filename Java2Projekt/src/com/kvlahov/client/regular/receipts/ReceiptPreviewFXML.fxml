@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane id="AnchorPane" maxHeight="530.0" maxWidth="436.0" prefHeight="530.0" prefWidth="436.0" style="-fx-background-color: white;" stylesheets="@../../../resources/receiptPreviewStyle.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.kvlahov.client.regular.receipts.ReceiptPreviewFXMLController">
+   <children>
+      <Label layoutX="14.0" layoutY="14.0" text="Date">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Label>
+      <Label layoutX="15.0" layoutY="38.0" text="User">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Label>
+      <Label fx:id="userLabel" layoutX="52.0" layoutY="38.0" text="Label" />
+      <Label fx:id="dateLabel" layoutX="52.0" layoutY="14.0" text="Label" />
+      <Label layoutX="169.0" layoutY="113.0" text="Receipt" textAlignment="CENTER">
+         <font>
+            <Font size="30.0" />
+         </font>
+      </Label>
+      <Label layoutX="190.0" layoutY="158.0" text="ID: #" textAlignment="CENTER">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Label>
+      <Label fx:id="idLabel" layoutX="221.0" layoutY="158.0" text="234" textAlignment="CENTER">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Label>
+      <Line endX="454.0" endY="168.5" layoutX="-39.0" layoutY="17.0" startX="61.0" startY="168.5" />
+      <BorderPane layoutX="22.0" layoutY="201.0" prefHeight="278.0" prefWidth="394.0">
+         <center>
+            <TableView fx:id="tableView" prefWidth="0.0" style="-fx-table-cell-border-color: transparent;">
+              <columns>
+                <TableColumn fx:id="productNameColumn" editable="false" prefWidth="89.6666259765625" text="Product" />
+                  <TableColumn fx:id="priceColumn" editable="false" prefWidth="66.33331298828125" text="Price" />
+                <TableColumn fx:id="amountColumn" editable="false" prefWidth="77.0" text="Amount" />
+                  <TableColumn fx:id="discountNameColumn" editable="false" prefWidth="69.0" text="Discount" />
+                  <TableColumn fx:id="totalColumn" editable="false" prefWidth="89.33331298828125" text="Total" />
+              </columns>
+            </TableView>
+         </center>
+         <bottom>
+            <HBox alignment="CENTER_RIGHT" prefHeight="30.0" prefWidth="393.0" spacing="5.0" BorderPane.alignment="CENTER">
+               <children>
+                  <Label text="Total">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="totalLabel" text="Label" />
+               </children>
+               <padding>
+                  <Insets left="5.0" right="5.0" />
+               </padding>
+            </HBox>
+         </bottom>
+      </BorderPane>
+      <Line endX="454.0" endY="168.5" layoutX="-39.0" layoutY="311.0" startX="61.0" startY="168.5" />
+   </children>
+</AnchorPane>

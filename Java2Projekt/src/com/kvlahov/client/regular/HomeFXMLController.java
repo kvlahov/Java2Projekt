@@ -45,7 +45,7 @@ public class HomeFXMLController implements Initializable {
 
     @FXML
     public void handleReceiptsClick(ActionEvent event) {
-        UIHelper.switchComponent((Pane) root, this.getClass(), "receipts/ReceiptsFXML.fxml");
+        UIHelper.switchComponent((Pane) root.getParent(), this.getClass(), "receipts/ReceiptsFXML.fxml");
     }
 
     @Override
