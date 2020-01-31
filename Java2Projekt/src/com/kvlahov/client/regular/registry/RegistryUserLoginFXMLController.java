@@ -10,10 +10,10 @@ import com.jfoenix.controls.JFXPasswordField;
 import com.kvlahov.model.RegistryUser;
 import com.kvlahov.model.interfaces.IControllerWithModel;
 import com.kvlahov.services.AccountService;
+import com.kvlahov.utilities.UIHelper;
 import java.net.URL;
 import java.util.Optional;
 import java.util.ResourceBundle;
-import java.util.logging.Logger;
 import java.util.regex.Pattern;
 import javafx.application.Platform;
 import javafx.beans.property.SimpleStringProperty;
@@ -24,7 +24,6 @@ import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.TextFormatter;
 import javafx.stage.Stage;
-import javafx.util.converter.IntegerStringConverter;
 import javafx.util.converter.LongStringConverter;
 
 /**
@@ -46,10 +45,7 @@ public class RegistryUserLoginFXMLController implements Initializable, IControll
         userPinField.textProperty().bindBidirectional(userPin);
         Platform.runLater(() -> userPinField.requestFocus());
 
-        TextFormatter<Long> formatter = new TextFormatter<>(
-                new LongStringConverter(),
-                null,
-                c -> Pattern.matches("\\d*", c.getText()) ? c : null);
+        TextFormatter<Long> formatter = UIHelper.getLongTextFormatter();
         
         userPinField.setTextFormatter(formatter);
 

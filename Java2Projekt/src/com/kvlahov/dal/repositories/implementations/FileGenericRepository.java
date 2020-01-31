@@ -29,9 +29,9 @@ public class FileGenericRepository<T extends IEntity> implements IRepository<T> 
 
         File dataFile = new File(filename);
         try {
-            if(!dataFile.exists()) {
+            if (!dataFile.exists()) {
                 dataFile.createNewFile();
-                initEmptyFile();                
+                initEmptyFile();
             }
         } catch (IOException ex) {
             Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, null, ex);
@@ -97,12 +97,20 @@ public class FileGenericRepository<T extends IEntity> implements IRepository<T> 
     }
 
     @Override
-    public void update(long id, T newEntity) {
+    public int update(long id, T newEntity) {
         Collection<T> allElements = getAll();
-        newEntity.setId(id);
-        allElements.removeIf(o -> o.getId() == id);
-        allElements.add(newEntity);
-        saveChanges(allElements);
+
+        Optional<T> oldValue = allElements.stream()
+                .filter(i -> i.equals(newEntity))
+                .findFirst();
+
+        if(oldValue.isPresent()) {
+            oldValue.get().setEntity(newEntity);
+            saveChanges(allElements);
+            return 1;
+        }
+        
+        return 0;
     }
 
     @Override

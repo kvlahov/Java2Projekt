@@ -10,5 +10,16 @@ package com.kvlahov.model.enums;
  * @author lordo
  */
 public enum UserRoleEnum {
-    REGULAR, ADMIN
+    REGULAR {
+        @Override
+        public String toString() {
+            return "Regular";
+        }
+    }, 
+    ADMIN {
+        @Override
+        public String toString() {
+            return "Admin";
+        }
+    }
 }

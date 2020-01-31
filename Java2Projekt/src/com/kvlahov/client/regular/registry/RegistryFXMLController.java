@@ -8,14 +8,12 @@ package com.kvlahov.client.regular.registry;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTabPane;
 import com.kvlahov.client.Main;
-import com.kvlahov.client.regular.HomeFXMLController;
 import com.kvlahov.model.Category;
 import com.kvlahov.model.Receipt;
 import com.kvlahov.model.ReceiptItem;
 import com.kvlahov.model.RegistryUser;
 import com.kvlahov.model.interfaces.IControllerWithModel;
 import com.kvlahov.services.RegistryService;
-import com.kvlahov.utilities.UIHelper;
 import com.sun.glass.ui.Application;
 import com.sun.glass.ui.Robot;
 import java.awt.event.KeyEvent;
@@ -28,7 +26,6 @@ import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.stream.Collectors;
-import javafx.application.Platform;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
@@ -40,7 +37,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
@@ -51,12 +47,13 @@ import javafx.scene.control.Tab;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.input.KeyCode;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
 import javafx.scene.text.TextAlignment;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 /**
  * FXML Controller class
@@ -222,6 +219,8 @@ public class RegistryFXMLController implements Initializable {
             Stage dialog = new Stage();
             RegistryUserLoginFXMLController controller = (RegistryUserLoginFXMLController) loader.getController();
 
+            dialog.initStyle(StageStyle.UTILITY);
+//            scene.setFill(Color.TRANSPARENT);
             dialog.setScene(scene);
             dialog.initOwner(Main.getStage());
             dialog.initModality(Modality.WINDOW_MODAL);
@@ -240,10 +239,9 @@ public class RegistryFXMLController implements Initializable {
             Robot r = Application.GetApplication().createRobot();
             r.keyPress(KeyEvent.VK_CONTROL);
             r.keyPress(KeyEvent.VK_H);
-            
+
             r.keyRelease(KeyEvent.VK_CONTROL);
             r.keyRelease(KeyEvent.VK_H);
-//            UIHelper.switchComponent((Pane)root.getParent(), HomeFXMLController.class, "HomeFXML.fxml");
         } else {
             user = controller.getModel();
             registryUserLabel.setText(user.getUsername());

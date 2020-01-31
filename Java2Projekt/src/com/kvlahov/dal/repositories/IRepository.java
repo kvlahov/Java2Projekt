@@ -17,7 +17,7 @@ public interface IRepository<T> {
     Optional<T> getById(long id);
     long add(T entity);
     void addRange(Collection<T> entities);
-    void update(long id, T newEntity);
+    int update(long id, T newEntity);
     void delete(long id);
     void deleteAll();
     void saveChanges(Collection<T> allElements);

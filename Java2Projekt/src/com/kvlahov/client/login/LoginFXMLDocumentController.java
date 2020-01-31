@@ -8,10 +8,12 @@ package com.kvlahov.client.login;
 import com.jfoenix.controls.JFXButton;
 import com.kvlahov.model.User;
 import com.kvlahov.services.AccountService;
+import com.kvlahov.utilities.PropertiesManager;
 import com.kvlahov.utilities.UIHelper;
 import java.net.URL;
 import java.util.Optional;
 import java.util.ResourceBundle;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -45,14 +47,14 @@ public class LoginFXMLDocumentController implements Initializable {
 
         //validate...
         Optional<User> user = service.loginUser(username, password);
-        
-        if(user.isPresent()){
-            //switch to main screen
-            switch(user.get().getRole()) { 
-                case REGULAR:
-                    UIHelper.switchScene((Node)event.getSource(), "regular/RegularFXMLDocument.fxml");
-            }
+
+        if (user.isPresent()) {
             errorLabel.setVisible(false);
+
+            PropertiesManager pm = new PropertiesManager();
+            //switch to main screen
+            UIHelper.switchScene((Node) event.getSource(), pm.getScreenForUserRole(user.get().getRole()));
+
         } else {
             errorLabel.setVisible(true);
             tfUsername.requestFocus();
@@ -63,10 +65,12 @@ public class LoginFXMLDocumentController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle rb) {
         service = new AccountService();
-        
+
         //login immediately
-        tfUsername.setText("user");
+        tfUsername.setText("admin");
         pfPassword.setText("password");
+        
+        Platform.runLater(() -> btnLogin.fire());
     }
 
     private void clearForm() {

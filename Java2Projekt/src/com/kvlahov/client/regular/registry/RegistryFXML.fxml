@@ -54,7 +54,7 @@
                <children>
                   <JFXButton alignment="CENTER" contentDisplay="CENTER" onAction="#handleRemoveClick" prefHeight="100.0" prefWidth="100.0" style="-fx-background-color: #CE7256;" text="Remove" textAlignment="CENTER" textFill="WHITE" />
                   <JFXButton alignment="CENTER" contentDisplay="CENTER" onAction="#handleCashClick" prefHeight="100.0" prefWidth="100.0" style="-fx-background-color: #CE7256;" text="Cash" textAlignment="CENTER" textFill="WHITE" />
-                  <JFXButton alignment="CENTER" contentDisplay="CENTER" prefHeight="100.0" prefWidth="100.0" style="-fx-background-color: #CE7256;" text="Credit card" textAlignment="CENTER" textFill="WHITE" />
+                  <JFXButton alignment="CENTER" contentDisplay="CENTER" disable="true" prefHeight="100.0" prefWidth="100.0" style="-fx-background-color: #CE7256;" text="Credit card" textAlignment="CENTER" textFill="WHITE" />
                   <JFXButton alignment="CENTER" contentDisplay="CENTER" prefHeight="100.0" prefWidth="100.0" style="-fx-background-color: #CE7256;" text="Add to table" textAlignment="CENTER" textFill="WHITE" />
                   <JFXButton alignment="CENTER" contentDisplay="CENTER" onAction="#handleSwitchUserClick" prefHeight="100.0" prefWidth="100.0" style="-fx-background-color: #CE7256;" text="Switch user" textAlignment="CENTER" textFill="WHITE" />
                </children>

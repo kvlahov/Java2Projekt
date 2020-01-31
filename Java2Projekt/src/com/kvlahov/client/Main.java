@@ -5,8 +5,6 @@
  */
 package com.kvlahov.client;
 
-import com.kvlahov.dal.repositories.IRepository;
-import com.kvlahov.dal.repositories.IUserRepository;
 import com.kvlahov.dal.repositories.implementations.CategoryRepository;
 import com.kvlahov.dal.repositories.implementations.ProductRepository;
 import com.kvlahov.dal.repositories.implementations.RegistryUserRepository;
@@ -16,10 +14,10 @@ import com.kvlahov.model.Product;
 import com.kvlahov.model.RegistryUser;
 import com.kvlahov.model.User;
 import com.kvlahov.model.enums.UserRoleEnum;
-import com.kvlahov.services.AccountService;
-import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -39,11 +37,15 @@ public class Main extends Application {
         return stage;
     }
 
-    
+    private static void createStartData() {
+//        createCategoriesAndProducts();
+//        createRegistryUsers();
+        createUsers();
+    }
 
     @Override
     public void start(Stage stage) throws Exception {
-        this.stage = stage;
+        Main.stage = stage;
         Parent root = FXMLLoader.load(getClass().getResource("login/LoginFXMLDocument.fxml"));
 
         Scene scene = new Scene(root);
@@ -57,8 +59,12 @@ public class Main extends Application {
      */
     public static void main(String[] args) {
         launch(args);
-        //createCategoriesAndProducts();
-//        createRegistryUsers();
+
+        User u = new User("oldUSer", "pass");
+        User u2 = new User("newUser", "nijePass");
+
+//        createStartData();
+
 //        testData();
     }
 
@@ -110,13 +116,20 @@ public class Main extends Application {
 
         productRepository.addRange(products);
     }
-    
+
     private static void createRegistryUsers() {
         RegistryUserRepository registryUserRepo = new RegistryUserRepository();
-        
+
         registryUserRepo.add(new RegistryUser(123, "Pero"));
         registryUserRepo.add(new RegistryUser(456, "Marko"));
         registryUserRepo.add(new RegistryUser(789, "Mirko"));
+    }
+
+    private static void createUsers() {
+        UserRepository ur = new UserRepository();
+        ur.deleteAll();
+        ur.add(new User("user", "password"));
+        ur.add(new User("admin", "password", UserRoleEnum.ADMIN));
     }
 
     private static void testData() {
