@@ -12,6 +12,7 @@ import java.io.Serializable;
  * @author evlakre
  */
 public class Category implements IEntity {
+
     private static final long serialVersionUID = 1L;
 
     private long id;
@@ -44,10 +45,10 @@ public class Category implements IEntity {
 
     @Override
     public String toString() {
-        return "Category{" + "id=" + id + ", name=" + name + '}';
+        return name;
     }
-    
-     @Override
+
+    @Override
     public boolean equals(Object obj) {
         if (obj instanceof Category) {
             Category other = ((Category) obj);

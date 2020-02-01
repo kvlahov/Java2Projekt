@@ -70,7 +70,7 @@ public class LoginFXMLDocumentController implements Initializable {
         tfUsername.setText("admin");
         pfPassword.setText("password");
         
-        Platform.runLater(() -> btnLogin.fire());
+//        Platform.runLater(() -> btnLogin.fire());
     }
 
     private void clearForm() {

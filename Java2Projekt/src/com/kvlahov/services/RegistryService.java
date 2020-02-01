@@ -55,4 +55,25 @@ public class RegistryService {
         
         receiptItemRepo.addRange(items);
     }
+    
+    public void insertProduct(Product p) {
+        productRepo.add(p);
+    }
+    public boolean updateProduct(Product p) {
+        return productRepo.update(p.getId(), p) == 1;
+    }
+    public void deleteProduct(Product p) {
+        productRepo.delete(p.getId());
+    }
+    
+    public void insertCategory(Category c) {
+        categoryRepo.add(c);
+    }
+    public boolean updateCategory(Category c) {
+        return categoryRepo.update(c.getId(), c) == 1;
+    }
+    public void deleteCategory(Category c) {
+        categoryRepo.delete(c.getId());
+    }
+    
 }

@@ -147,13 +147,10 @@ public class UsersFXMLController implements Initializable {
         appUsersUsernameColumn.setCellFactory(TextFieldTableCell.forTableColumn());
         appUsersRoleColumn.setCellFactory(ComboBoxTableCell.forTableColumn(roleValuesArr));
         appUsersActionButtonColumn.setCellFactory(ActionButtonTableCell.forTableColumn("Delete", u -> {
-            Optional<ButtonType> buttonType = showWarningDialog("Are you sure you want to delete this user?");
-
-            if (buttonType.isPresent() && buttonType.get() == ButtonType.YES) {
+            UIHelper.showWarningDialog("Are you sure you want to delete this user?", b -> {
                 usersList.remove(u);
                 accountService.removeUser(u);
-            }
-
+            });
         }));
 
         appUsersUsernameColumn.setOnEditCommit(event -> {
@@ -164,7 +161,7 @@ public class UsersFXMLController implements Initializable {
                 event.getRowValue().setUsername(value);
                 accountService.updateUser(event.getRowValue());
             } else {
-                showInfoAlert("Username already exists");
+                UIHelper.showInfoAlert("Username already exists");
                 event.getTableView().refresh();
             }
         });
@@ -181,12 +178,6 @@ public class UsersFXMLController implements Initializable {
 
     private boolean userExists(String username) {
         return usersList.stream().map(u -> u.getUsername()).anyMatch(u -> u.equals(username));
-    }
-
-    private void showInfoAlert(String message) {
-        Alert alert = new Alert(Alert.AlertType.WARNING, message, ButtonType.OK);
-        alert.setHeaderText(null);
-        alert.showAndWait();
     }
 
     @FXML
@@ -218,7 +209,7 @@ public class UsersFXMLController implements Initializable {
             registryUserList.add(ru);
             tfRegistryPin.clear();
             tfRegistryUsername.clear();
-            
+
             accountService.addRegistryUser(ru);
 
         } else {
@@ -235,12 +226,10 @@ public class UsersFXMLController implements Initializable {
 //        registryUsersPinColumn.setCellFactory();
 
         registryUsersActionButtonColumn.setCellFactory(ActionButtonTableCell.forTableColumn("Delete", u -> {
-            Optional<ButtonType> buttonType = showWarningDialog("Are you sure you want to delete this user?");
-
-            if (buttonType.isPresent() && buttonType.get() == ButtonType.YES) {
+            UIHelper.showWarningDialog("Are you sure you want to delete this user?", e -> {
                 registryUserList.remove(u);
                 accountService.removeRegistryUser(u);
-            }
+            });
         }));
 
         registryUsersPinColumn.setOnEditCommit(event -> {
@@ -251,8 +240,7 @@ public class UsersFXMLController implements Initializable {
                 event.getRowValue().setPin(value);
                 accountService.updateRegistryUser(event.getRowValue());
             } else {
-                showInfoAlert("Pin is already taken");
-                event.consume();
+                UIHelper.showInfoAlert("Pin is already taken");
             }
         });
         registryUsersUsernameColumn.setOnEditCommit(event -> {
@@ -264,13 +252,6 @@ public class UsersFXMLController implements Initializable {
         });
 
         registryUsersTable.setItems(registryUserList);
-    }
-
-    private Optional<ButtonType> showWarningDialog(final String message) {
-        Alert alert = new Alert(Alert.AlertType.WARNING, message, ButtonType.YES, ButtonType.NO);
-        alert.setHeaderText(null);
-        Optional<ButtonType> buttonType = alert.showAndWait();
-        return buttonType;
     }
 
     private boolean userWithPinExists(long value) {

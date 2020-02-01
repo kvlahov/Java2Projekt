@@ -5,10 +5,14 @@
  */
 package com.kvlahov.utilities;
 
+import com.jfoenix.validation.base.ValidatorBase;
 import com.kvlahov.client.Main;
 import com.kvlahov.client.login.LoginFXMLDocumentController;
 import com.kvlahov.model.interfaces.IControllerWithModel;
 import java.io.IOException;
+import java.util.Optional;
+import java.util.function.Consumer;
+import java.util.function.Predicate;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import java.util.regex.Pattern;
@@ -20,6 +24,9 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.TextField;
 import javafx.scene.control.TextFormatter;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
@@ -42,7 +49,7 @@ public class UIHelper {
             Scene scene = new Scene(root);
             stage.setScene(scene);
             stage.setMaximized(true);
-            stage.setResizable(false);
+//            stage.setResizable(false);s
             stage.centerOnScreen();
         } catch (IOException ex) {
             Logger.getLogger(LoginFXMLDocumentController.class.getName()).log(Level.SEVERE, null, ex);
@@ -106,11 +113,40 @@ public class UIHelper {
         AnchorPane.setBottomAnchor(node, 0.0);
         AnchorPane.setLeftAnchor(node, 0.0);
     }
-    
+
     public static TextFormatter<Long> getLongTextFormatter() {
         return new TextFormatter<>(
                 new LongStringConverter(),
                 null,
                 c -> Pattern.matches("\\d*", c.getText()) ? c : null);
+    }
+
+    public static void showInfoAlert(String message) {
+        Alert alert = new Alert(Alert.AlertType.WARNING, message, ButtonType.OK);
+        alert.setHeaderText(null);
+        alert.showAndWait();
+    }
+
+    public static void showWarningDialog(final String message, Consumer<ButtonType> consumer) {
+        Alert alert = new Alert(Alert.AlertType.WARNING, message, ButtonType.YES, ButtonType.NO);
+        alert.setHeaderText(null);
+        Optional<ButtonType> buttonType = alert.showAndWait();
+//        return buttonType;
+        
+        if (buttonType.isPresent() && buttonType.get() == ButtonType.YES) {
+            consumer.accept(buttonType.get());
+        }
+    }
+
+    public static ValidatorBase getCustomValidator(Predicate<String> predicate) {
+        return new ValidatorBase() {
+            @Override
+            protected void eval() {
+                if (srcControl.get() instanceof TextField) {
+                    boolean testResult = predicate.test(((TextField) srcControl.get()).getText());
+                    hasErrors.set(testResult);
+                }
+            }
+        };
     }
 }

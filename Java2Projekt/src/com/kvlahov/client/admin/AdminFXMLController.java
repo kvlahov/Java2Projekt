@@ -45,6 +45,11 @@ public class AdminFXMLController implements Initializable {
     }
     
     @FXML
+    public void handleProductClick(ActionEvent event) {
+        UIHelper.switchComponentSlide(rootPane, Main.class, "admin/ProductsFXML.fxml");
+    }
+    
+    @FXML
     public void handleLogoutClick(ActionEvent event) {
         UIHelper.switchScene(rootPane, "login/LoginFXMLDocument.fxml");
     }
