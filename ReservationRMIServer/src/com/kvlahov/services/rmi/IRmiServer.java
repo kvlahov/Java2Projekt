@@ -5,17 +5,18 @@
  */
 package com.kvlahov.services.rmi;
 
+import java.rmi.Remote;
 import java.rmi.RemoteException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
  * @author evlakre
  */
-public class Client1 extends RmiClient{
+public interface RmiInterface extends Remote {
 
-    public Client1() {
-        super("client1", 0);
-    }    
+    public void sayHello(RmiClient client) throws RemoteException;
+
+    public void registerClient(RmiClient client) throws RemoteException;
+    
+    public void notifyAllClients(String msg) throws RemoteException;
 }
