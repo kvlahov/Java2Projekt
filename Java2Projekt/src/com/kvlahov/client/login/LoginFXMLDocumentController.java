@@ -28,7 +28,8 @@ import javafx.scene.control.TextField;
  * @author lordo
  */
 public class LoginFXMLDocumentController implements Initializable {
-
+    private static final String USERNAME = "regular";
+    
     @FXML
     private Label errorLabel;
     @FXML
@@ -67,10 +68,10 @@ public class LoginFXMLDocumentController implements Initializable {
         service = new AccountService();
 
         //login immediately
-        tfUsername.setText("admin");
+        tfUsername.setText(USERNAME);
         pfPassword.setText("password");
         
-//        Platform.runLater(() -> btnLogin.fire());
+        Platform.runLater(() -> btnLogin.fire());
     }
 
     private void clearForm() {

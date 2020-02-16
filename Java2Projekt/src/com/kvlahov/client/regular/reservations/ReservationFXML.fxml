@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import com.jfoenix.controls.JFXTimePicker?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+
+<BorderPane xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.kvlahov.client.regular.reservations.ReservationFXMLController">
+   <center>
+      <ScrollPane>
+         <content>
+            <FlowPane fx:id="pane" hgap="20.0" prefHeight="385.0" prefWidth="550.0" vgap="20.0">
+               <padding>
+                  <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+               </padding>
+            </FlowPane>
+         </content>
+      </ScrollPane>
+   </center>
+   <top>
+      <HBox alignment="CENTER_LEFT" prefHeight="40.0" prefWidth="550.0" spacing="5.0" BorderPane.alignment="CENTER">
+         <children>
+            <Label text="Number of connected clients">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </Label>
+            <Label fx:id="lblConnectedClients" text="0" />
+         </children>
+      </HBox>
+   </top>
+   <bottom>
+      <VBox BorderPane.alignment="CENTER">
+         <children>
+            <GridPane fx:id="reservationForm" hgap="5.0" style="-fx-background-color: #e7e7e7;" vgap="5.0" visible="false">
+               <columnConstraints>
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="275.6666259765625" minWidth="10.0" prefWidth="264.0" />
+                  <ColumnConstraints hgrow="SOMETIMES" maxWidth="164.0" minWidth="10.0" prefWidth="138.0" />
+               </columnConstraints>
+               <rowConstraints>
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+               </rowConstraints>
+               <children>
+                  <JFXTimePicker fx:id="tpTime" prefHeight="25.0" prefWidth="267.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                  <Label text="Name" GridPane.halignment="RIGHT" />
+                  <JFXTextField fx:id="tfName" GridPane.columnIndex="1" />
+                  <Label text="Label" GridPane.halignment="RIGHT" GridPane.rowIndex="1" />
+                  <JFXButton fx:id="btnReserve" onAction="#handleReserveClick" prefHeight="33.0" prefWidth="122.0" style="-fx-background-color: lightgreen;" text="Make reservation" GridPane.columnIndex="2" GridPane.halignment="CENTER" />
+                  <JFXButton fx:id="btnCancel" onAction="#handleCancelClick" prefHeight="29.0" prefWidth="122.0" style="-fx-background-color: orange;" text="Cancel" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
+               </children>
+               <padding>
+                  <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
+               </padding>
+            </GridPane>
+         </children>
+      </VBox>
+   </bottom>
+</BorderPane>

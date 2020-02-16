@@ -5,7 +5,6 @@
  */
 package com.kvlahov.utilities;
 
-import com.kvlahov.model.enums.UserRoleEnum;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -74,9 +73,4 @@ public class PropertiesManager {
     public String getDateFormat() {
         return getProperty("date.format");
     }
-    
-    public String getScreenForUserRole(UserRoleEnum role) {
-        return getProperty("ui." + UserRoleEnum.class.getSimpleName() + "." + role.name());
-    }
-
 }

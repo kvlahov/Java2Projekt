@@ -12,13 +12,17 @@ import com.kvlahov.dal.repositories.implementations.UserRepository;
 import com.kvlahov.model.Category;
 import com.kvlahov.model.Product;
 import com.kvlahov.model.RegistryUser;
+import com.kvlahov.model.ReservationInfo;
 import com.kvlahov.model.User;
 import com.kvlahov.model.enums.UserRoleEnum;
+import com.kvlahov.services.XmlService;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -40,7 +44,7 @@ public class Main extends Application {
     private static void createStartData() {
 //        createCategoriesAndProducts();
 //        createRegistryUsers();
-        createUsers();
+//        createUsers();
     }
 
     @Override
@@ -51,6 +55,10 @@ public class Main extends Application {
         Scene scene = new Scene(root);
 
         stage.setScene(scene);
+        stage.setOnCloseRequest(e -> {
+            Platform.exit();
+            System.exit(0);
+        });
         stage.show();
     }
 
@@ -58,14 +66,11 @@ public class Main extends Application {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
+//        createStartData();
+//        testData();
+
         launch(args);
 
-        User u = new User("oldUSer", "pass");
-        User u2 = new User("newUser", "nijePass");
-
-//        createStartData();
-
-//        testData();
     }
 
     private static void createCategoriesAndProducts() {

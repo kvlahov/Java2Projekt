@@ -25,14 +25,9 @@
                         </MenuItem>
                      </items>
                         </Menu>
-                        <Menu mnemonicParsing="false" text="Edit">
-                            <items>
-                                <MenuItem mnemonicParsing="false" text="Delete" />
-                            </items>
-                        </Menu>
                         <Menu mnemonicParsing="false" text="Help">
                             <items>
-                                <MenuItem mnemonicParsing="false" text="About" />
+                                <MenuItem mnemonicParsing="false" onAction="#handleHelpClick" text="Generate docs" />
                             </items>
                         </Menu>
                     </menus>
@@ -42,7 +37,7 @@
         </HBox>
     </top>
     <center>
-        <AnchorPane fx:id="container">
+        <AnchorPane fx:id="container" prefHeight="258.0" prefWidth="600.0">
          <padding>
             <Insets bottom="10.0" left="30.0" right="30.0" top="10.0" />
          </padding>

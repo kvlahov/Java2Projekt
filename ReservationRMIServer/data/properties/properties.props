@@ -1,6 +1,7 @@
 #Sat Jan 18 17:57:38 CET 2020
 server.port=12345
-server.url=localhost
+server.url=//localhost//server
+# server.url=localhost
 date.format=dd.MM.yyyy
 ui.UserRoleEnum.ADMIN=/com/kvlahov/client/admin/AdminFXML.fxml
 ui.UserRoleEnum.REGULAR=/com/kvlahov/client/regular/RegularFXMLDocument.fxml

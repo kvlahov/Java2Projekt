@@ -5,6 +5,8 @@
  */
 package com.kvlahov.services.rmi;
 
+import com.kvlahov.model.ReservationInfo;
+import java.io.Serializable;
 import java.rmi.Remote;
 import java.rmi.RemoteException;
 
@@ -12,11 +14,17 @@ import java.rmi.RemoteException;
  *
  * @author evlakre
  */
-public interface RmiInterface extends Remote {
+public interface IRmiServer extends Remote {
 
-    public void sayHello(RmiClient client) throws RemoteException;
+    void registerClient(IRmiClient client) throws RemoteException;
 
-    public void registerClient(RmiClient client) throws RemoteException;
-    
-    public void notifyAllClients(String msg) throws RemoteException;
+    void unregisterClient(IRmiClient client) throws RemoteException;
+
+    void lockTable(long clientId, int id) throws RemoteException;
+
+    void unlockTable(long clientId, int id) throws RemoteException;
+
+    void reserveTable(long clientId, ReservationInfo reservation) throws RemoteException;
+
+    void freeTable(long clientId, int id) throws RemoteException;
 }

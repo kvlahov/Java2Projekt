@@ -33,25 +33,25 @@ public class ReservationProcessor extends Thread {
     public void run() {
         LOG.info( "Entered run...");
         while(true) {
-            try {
-                String incomingMsg = inputStream.readUTF();
-                LOG.info("Received msg: " + incomingMsg);
-                
-                if(incomingMsg.equalsIgnoreCase("exit")) {
-                    LOG.info("Closing connection: ");
-                    clientSocket.close();
-                    inputStream.close();
-                    outputStream.close();
-                    break;
-                } else {
-                    int random = new Random().nextInt(100);
-                    LOG.info("Sending random int: " + random);
-                    outputStream.writeUTF(String.valueOf(random));
-                    outputStream.flush();
-                }
-            } catch (IOException ex) {
-                LOG.log(Level.SEVERE, null, ex);
-            }
+//            try {
+//                String incomingMsg = inputStream.readUTF();
+//                LOG.info("Received msg: " + incomingMsg);
+//                
+//                if(incomingMsg.equalsIgnoreCase("exit")) {
+//                    LOG.info("Closing connection: ");
+//                    clientSocket.close();
+//                    inputStream.close();
+//                    outputStream.close();
+//                    break;
+//                } else {
+//                    int random = new Random().nextInt(100);
+//                    LOG.info("Sending random int: " + random);
+//                    outputStream.writeUTF(String.valueOf(random));
+//                    outputStream.flush();
+//                }
+//            } catch (IOException ex) {
+//                LOG.log(Level.SEVERE, null, ex);
+//            }
         }
     }
 

@@ -26,7 +26,7 @@
             <Insets bottom="25.0" top="25.0" />
          </padding>
       </Button>
-      <Button maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#handleInventoryClick" text="Inventory" GridPane.columnIndex="2">
+      <Button disable="true" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#handleInventoryClick" text="Inventory" GridPane.columnIndex="2">
          <GridPane.margin>
             <Insets />
          </GridPane.margin>

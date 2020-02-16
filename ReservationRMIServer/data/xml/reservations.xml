@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<reservationInfoList>
+    <reservationInfo>
+        <tableId>0</tableId>
+    </reservationInfo>
+    <reservationInfo>
+        <reservationDateTime>2020-02-16T20:38</reservationDateTime>
+        <name>kresica</name>
+        <tableId>5</tableId>
+    </reservationInfo>
+</reservationInfoList>

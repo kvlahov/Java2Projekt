@@ -5,7 +5,9 @@
  */
 package com.kvlahov.client.regular.reservations;
 
+import com.jfoenix.controls.JFXSpinner;
 import com.kvlahov.services.ReservationService;
+import com.kvlahov.utilities.UIHelper;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -17,6 +19,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.layout.Pane;
 
 /**
  * FXML Controller class
@@ -30,13 +33,20 @@ public class ConnectingToServerFXMLController implements Initializable {
 
     @FXML
     private Button btnTryAgain;
+    
+    @FXML
+    private JFXSpinner spinner;
 
+    @FXML
+    private Pane root;
+    
     private ReservationService service;
     private String connectingMessage;
 
     @FXML
     public void handleTryAgainClick(ActionEvent event) {
         lblMessage.setText(connectingMessage);
+        spinner.setVisible(true);
         btnTryAgain.setVisible(false);
 
         tryConnectToServer();
@@ -50,15 +60,13 @@ public class ConnectingToServerFXMLController implements Initializable {
             } catch (InterruptedException ex) {
                 Logger.getLogger(ConnectingToServerFXMLController.class.getName()).log(Level.SEVERE, null, ex);
             }
-            try {
-                if (!service.connectToServer()) {
-                    handleFailedServerConnection();
-                } else {
-                    handleSuccessfulServerConnection();
-                }
-            } catch (IOException | IllegalArgumentException ex) {
+
+            if (!service.connectToServer()) {
                 handleFailedServerConnection();
+            } else {
+                handleSuccessfulServerConnection();
             }
+
         });
         thread.start();
     }
@@ -66,13 +74,14 @@ public class ConnectingToServerFXMLController implements Initializable {
     private void handleFailedServerConnection() {
         Platform.runLater(() -> {
             lblMessage.setText("Connecting to the server failed!");
+            spinner.setVisible(false);
             btnTryAgain.setVisible(true);
         });
     }
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        service = new ReservationService();
+        service = new ReservationService(false);
         connectingMessage = lblMessage.getText();
         tryConnectToServer();
     }
@@ -80,6 +89,13 @@ public class ConnectingToServerFXMLController implements Initializable {
     private void handleSuccessfulServerConnection() {
         Platform.runLater(() -> {
             lblMessage.setText("Successful connection!");
+            spinner.setVisible(false);
+            try {
+                Thread.sleep(500);
+            } catch (InterruptedException ex) {
+                Logger.getLogger(ConnectingToServerFXMLController.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            UIHelper.switchComponentSetModel((Pane)root.getParent(), getClass(), "ReservationFXML.fxml", service);
         });
     }
 
