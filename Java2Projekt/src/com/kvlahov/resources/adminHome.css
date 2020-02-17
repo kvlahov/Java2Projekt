@@ -18,7 +18,7 @@ and open the template in the editor.
 }
 
 .border-pane {
-    
+
 }
 
 .sidebar .label, .sidebar .jfx-button {
@@ -32,4 +32,23 @@ and open the template in the editor.
 .login-button {
     -fx-background-color: #173867;
     -fx-border-width: 0;
+}
+
+/*Users tab*/
+
+.jfx-tab-pane .tab-header-background{
+    -fx-background-color: #96cdff;
+}
+.tab {
+    /*    -fx-border-style:solid; */
+    -fx-padding: 1;
+}
+.tab .tab-label {
+    -fx-text-fill: black;
+}
+.jfx-tab-pane .tab-selected-line {
+    -fx-background-color: #033e74;
+}
+.jfx-tab-pane .control-buttons-tab .jfx-rippler{
+    -jfx-rippler-fill: white;
 }

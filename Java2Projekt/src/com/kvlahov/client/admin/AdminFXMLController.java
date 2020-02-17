@@ -50,13 +50,19 @@ public class AdminFXMLController implements Initializable {
     }
     
     @FXML
+    public void handleReceiptsClick(ActionEvent event) {
+        UIHelper.switchComponentSlide(rootPane, Main.class, "regular/receipts/ReceiptsFXML.fxml");
+    }
+    
+    @FXML
     public void handleLogoutClick(ActionEvent event) {
         UIHelper.switchScene(rootPane, "login/LoginFXMLDocument.fxml");
     }
 
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        RequiredFieldValidator validator = new RequiredFieldValidator();
+        
+        
 
 //        validator.setMessage("This field is required");
 //        validator.setIcon(GlyphsBuilder.create(FontAwesomeIconView.class).glyph(FontAwesomeIcon.WARNING).size("1em").style("error").build());

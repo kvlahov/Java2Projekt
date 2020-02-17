@@ -11,11 +11,7 @@
 
 <BorderPane prefHeight="433.0" prefWidth="600.0" styleClass="border-pane" stylesheets="@../../resources/adminHome.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.kvlahov.client.admin.AdminFXMLController">
    <center>
-      <AnchorPane fx:id="rootPane" prefHeight="200.0" prefWidth="200.0">
-         <children>
-            <AnchorPane layoutX="-57.0" layoutY="96.0" prefHeight="200.0" prefWidth="531.0" style="-fx-background-color: black;" />
-         </children>
-      </AnchorPane>
+      <AnchorPane fx:id="rootPane" prefHeight="200.0" prefWidth="200.0" />
    </center>
    <left>
       <VBox prefHeight="375.0" prefWidth="132.0" styleClass="sidebar" BorderPane.alignment="CENTER">
@@ -30,8 +26,7 @@
             </Label>
             <JFXButton onAction="#handleUser" prefHeight="40.0" prefWidth="150.0" ripplerFill="WHITE" text="User" textAlignment="CENTER" wrapText="true" />
             <JFXButton onAction="#handleProductClick" prefHeight="40.0" prefWidth="150.0" ripplerFill="WHITE" text="Product" textAlignment="CENTER" wrapText="true" />
-            <JFXButton prefHeight="40.0" prefWidth="150.0" ripplerFill="WHITE" text="Inventory" textAlignment="CENTER" wrapText="true" />
-            <JFXButton prefHeight="40.0" prefWidth="150.0" ripplerFill="WHITE" text="Receipts" textAlignment="CENTER" wrapText="true" />
+            <JFXButton onAction="#handleReceiptsClick" prefHeight="40.0" prefWidth="150.0" ripplerFill="WHITE" text="Receipts" textAlignment="CENTER" wrapText="true" />
             <Region prefHeight="93.0" prefWidth="132.0" VBox.vgrow="ALWAYS" />
             <JFXButton onAction="#handleLogoutClick" prefHeight="40.0" prefWidth="152.0" ripplerFill="WHITE" styleClass="login-button" text="Log out" />
             <Region prefHeight="61.0" prefWidth="132.0" />

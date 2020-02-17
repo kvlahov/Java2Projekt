@@ -13,8 +13,7 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-
-<AnchorPane id="AnchorPane" prefHeight="595.0" prefWidth="759.0" style="-fx-background-color: white;" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.171" fx:controller="com.kvlahov.client.admin.ProductsFXMLController">
+<AnchorPane id="AnchorPane" prefHeight="666.0" prefWidth="779.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.kvlahov.client.admin.ProductsFXMLController">
    <children>
       <TableView fx:id="productTable" editable="true" layoutX="33.0" layoutY="24.0" prefHeight="357.0" prefWidth="419.0">
         <columns>
@@ -75,6 +74,24 @@
           </TitledPane>
         </panes>
       </Accordion>
-      <Accordion layoutX="463.0" layoutY="355.0" />
+      <Accordion layoutX="33.0" layoutY="395.0" prefHeight="257.0" prefWidth="421.0">
+        <panes>
+          <TitledPane prefHeight="215.0" prefWidth="419.0" text="Categories">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="91.0" prefWidth="417.0">
+                     <children>
+                        <TableView fx:id="categoryTable" editable="true" prefHeight="231.0" prefWidth="419.0">
+                          <columns>
+                            <TableColumn fx:id="categoryIdColumn" prefWidth="75.0" text="ID" />
+                            <TableColumn fx:id="categoryNameColumn" prefWidth="207.0" text="Name" />
+                              <TableColumn fx:id="categoryActionButtonColumn" prefWidth="136.0" text="Action" />
+                          </columns>
+                        </TableView>
+                     </children>
+                  </AnchorPane>
+            </content>
+          </TitledPane>
+        </panes>
+      </Accordion>
    </children>
 </AnchorPane>

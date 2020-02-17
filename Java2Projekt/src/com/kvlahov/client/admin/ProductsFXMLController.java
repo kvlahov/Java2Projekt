@@ -56,6 +56,16 @@ public class ProductsFXMLController implements Initializable {
     @FXML
     private TableColumn<Product, Button> productActionButtonColumn;
 
+    //category table
+    @FXML
+    private TableView<Category> categoryTable;
+    @FXML
+    private TableColumn<Category, Long> categoryIdColumn;
+    @FXML
+    private TableColumn<Category, String> categoryNameColumn;
+    @FXML
+    private TableColumn<Category, Button> categoryActionButtonColumn;
+    
     //product form
     @FXML
     private JFXTextField tfProductName;
@@ -101,6 +111,7 @@ public class ProductsFXMLController implements Initializable {
     public void initialize(URL url, ResourceBundle rb) {
         init();
         initTableView();
+        initCategoryTableView();
     }
 
     private void init() {
@@ -147,22 +158,9 @@ public class ProductsFXMLController implements Initializable {
             });
         }));
 
-//        productNameColumn.setOnEditCommit(event -> {
-//            String newValue = event.getNewValue();
-//            String value = newValue != null && !newValue.isEmpty() ? newValue : event.getOldValue();
-//
-//            if (value.equals(newValue) && !productExists(value)) {
-//                Product p = event.getRowValue();
-//                p.setName(value);
-//                registryService.updateProduct(p);
-//            } else {
-//                UIHelper.showInfoAlert("Product already exits!");
-//                event.getTableView().refresh();
-//            }
-//        });
         MyCellEditHandler<Product, String> handler = new MyCellEditHandler<>();
         handler.setAlertMessage("Product already exists");
-        handler.setValidationPredicate(newVal -> !productExists(newVal) || !newVal.isEmpty());
+        handler.setValidationPredicate(newVal -> !productExists(newVal) && !newVal.isEmpty());
         handler.setValidationSuccessConsumer((rowVal, celVal) -> {
             rowVal.setName(celVal);
             registryService.updateProduct(rowVal);
@@ -189,9 +187,7 @@ public class ProductsFXMLController implements Initializable {
 //                event.getTableView().refresh();
 //            }
 //        });
-
-        MyCellEditHandler<Product, Double> priceHandler = new MyCellEditHandler<>
-        (
+        MyCellEditHandler<Product, Double> priceHandler = new MyCellEditHandler<>(
                 newVal -> newVal > 0,
                 "Price must be a number greater than 0!",
                 (p, newVal) -> {
@@ -210,6 +206,31 @@ public class ProductsFXMLController implements Initializable {
 
     private boolean categoryExists(String name) {
         return categories.stream().anyMatch(c -> c.getName().equals(name));
+    }
+
+    private void initCategoryTableView() {
+        categoryIdColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
+        categoryNameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
+        
+        categoryNameColumn.setCellFactory(TextFieldTableCell.forTableColumn());
+        categoryActionButtonColumn.setCellFactory(ActionButtonTableCell.forTableColumn("Delete", c -> {
+            UIHelper.showWarningDialog("Are you sure you want to remove this category and all of its products?", b -> {
+                categories.remove(c);
+                registryService.deleteCategory(c);
+            });
+        }));
+        
+        MyCellEditHandler<Category, String> handler = new MyCellEditHandler<>();
+        handler.setAlertMessage("Category already exists");
+        handler.setValidationPredicate(newVal -> !categoryExists(newVal) && !newVal.isEmpty());
+        handler.setValidationSuccessConsumer((rowVal, celVal) -> {
+            rowVal.setName(celVal);
+            registryService.updateCategory(rowVal);
+        });
+
+        categoryNameColumn.setOnEditCommit(handler);
+        
+        categoryTable.setItems(categories);
     }
 
 }

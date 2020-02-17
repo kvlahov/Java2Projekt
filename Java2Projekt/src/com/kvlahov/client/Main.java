@@ -37,7 +37,7 @@ public class Main extends Application {
     }
 
     private static void createStartData() {
-//        createCategoriesAndProducts();
+        createCategoriesAndProducts();
 //        createRegistryUsers();
 //        createUsers();
     }

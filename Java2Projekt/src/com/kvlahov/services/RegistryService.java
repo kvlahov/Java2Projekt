@@ -73,6 +73,7 @@ public class RegistryService {
         return categoryRepo.update(c.getId(), c) == 1;
     }
     public void deleteCategory(Category c) {
+        getProductsForCategory(c).forEach(p -> productRepo.delete(p.getId()));
         categoryRepo.delete(c.getId());
     }
     

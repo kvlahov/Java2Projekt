@@ -28,12 +28,3 @@ and open the template in the editor.
     -fx-background-color:#292b2c;   
     -fx-text-fill: #F2AA4CFF;
 }
-
-.jfx-tab-pane .tab-header-background{
-    -fx-background-color: #b2761f;
-}
-
-.tab {
-    -fx-border-style:solid; 
-    -fx-padding: 1;
-}
