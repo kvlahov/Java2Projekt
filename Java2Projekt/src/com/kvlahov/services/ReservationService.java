@@ -75,6 +75,19 @@ public class ReservationService implements IRmiClient {
             return false;
         }
     }
+    
+    public boolean disconnectFromServer(){
+        if(server == null) {
+            return false;
+        }
+        
+        try {
+            server.unregisterClient(this);
+            return true;
+        } catch (RemoteException ex) {
+            return false;
+        }
+    }
 
     @Override
     public long getClientId() throws RemoteException {

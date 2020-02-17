@@ -71,7 +71,7 @@ public class LoginFXMLDocumentController implements Initializable {
         tfUsername.setText(USERNAME);
         pfPassword.setText("password");
         
-        Platform.runLater(() -> btnLogin.fire());
+//        Platform.runLater(() -> btnLogin.fire());
     }
 
     private void clearForm() {

@@ -30,8 +30,8 @@ public class HomeFXMLController implements Initializable {
 
     @FXML
     public void handleReservationsClick(ActionEvent event) {
-        UIHelper.switchComponent((Pane) root.getParent(), this.getClass(), "reservations/ConnectingToServerFXML.fxml");
-//        UIHelper.switchComponent((Pane) root.getParent(), this.getClass(), "reservations/ReservationFXML.fxml");
+//        UIHelper.switchComponent((Pane) root.getParent(), this.getClass(), "reservations/ConnectingToServerFXML.fxml");
+        UIHelper.showModalDialog(this.getClass(), "reservations/ConnectingToServerFXML.fxml");
     }
 
     @FXML

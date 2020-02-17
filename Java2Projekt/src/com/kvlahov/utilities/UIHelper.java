@@ -8,6 +8,7 @@ package com.kvlahov.utilities;
 import com.jfoenix.validation.base.ValidatorBase;
 import com.kvlahov.client.Main;
 import com.kvlahov.client.login.LoginFXMLDocumentController;
+import com.kvlahov.client.regular.registry.RegistryFXMLController;
 import com.kvlahov.model.interfaces.IControllerWithModel;
 import java.io.IOException;
 import java.util.Optional;
@@ -29,7 +30,9 @@ import javafx.scene.control.ButtonType;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextFormatter;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import javafx.util.converter.LongStringConverter;
@@ -148,5 +151,20 @@ public class UIHelper {
                 }
             }
         };
+    }
+    
+    public static void showModalDialog(Class clazz, String path) {
+            Node node = loadNode(clazz, path);
+            AnchorPane container = new AnchorPane(node);
+            container.setPrefSize(700, 500);
+            Scene scene = new Scene(container);
+            Stage dialog = new Stage();
+
+//            dialog.initStyle(StageStyle.UTILITY);
+
+            dialog.setScene(scene);
+            dialog.initOwner(Main.getStage());
+            dialog.initModality(Modality.WINDOW_MODAL);
+            dialog.showAndWait();
     }
 }

@@ -5,6 +5,7 @@
  */
 package com.kvlahov.client.regular.receipts;
 
+import com.jfoenix.controls.JFXButton;
 import com.kvlahov.model.Receipt;
 import com.kvlahov.services.ReceiptsService;
 import com.kvlahov.utilities.UIHelper;
@@ -15,6 +16,7 @@ import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TableColumn;
@@ -39,6 +41,8 @@ public class ReceiptsFXMLController implements Initializable {
     private TableColumn<Receipt, String> createdByColumn;
     @FXML
     private AnchorPane receiptPane;
+    @FXML
+    private JFXButton btnCancelReceipt;
 
     private ObservableList<Receipt> receipts;
     private ReceiptsService receiptsService;
@@ -54,9 +58,11 @@ public class ReceiptsFXMLController implements Initializable {
         tableView.getSelectionModel().selectedIndexProperty()
                 .addListener((obs, oldSelection, newSelection) -> {
                     if (newSelection != null) {
+                        btnCancelReceipt.setVisible(true);
                         Receipt r = tableView.getSelectionModel().getSelectedItem();
                         UIHelper.switchComponentSetModel(receiptPane, ReceiptsFXMLController.class, "ReceiptPreviewFXML.fxml", r);
                     } else {
+                        btnCancelReceipt.setVisible(false);
                         receiptPane.getChildren().clear();
                     }
                 });
@@ -78,6 +84,17 @@ public class ReceiptsFXMLController implements Initializable {
 
     private void fillReceipts() {
         receipts.addAll(receiptsService.getReceipts());
+    }
+    
+    @FXML
+    public void handeCancelReceiptClick(ActionEvent e) {
+        Receipt selectedReceipt = tableView.getSelectionModel().getSelectedItem();
+        if(selectedReceipt != null) {
+            new Thread(() -> {
+                Receipt canceledReceipt = receiptsService.cancelReceipt(selectedReceipt);
+                receipts.add(canceledReceipt);
+            }).start();
+        }
     }
 
 }

@@ -1,11 +1,43 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <reservationInfoList>
     <reservationInfo>
-        <tableId>0</tableId>
-    </reservationInfo>
-    <reservationInfo>
         <reservationDateTime>2020-02-16T20:38</reservationDateTime>
         <name>kresica</name>
         <tableId>5</tableId>
+    </reservationInfo>
+    <reservationInfo>
+        <reservationDateTime>2020-02-16T20:38</reservationDateTime>
+        <name>frankca</name>
+        <tableId>4</tableId>
+    </reservationInfo>
+    <reservationInfo>
+        <reservationDateTime>2020-02-16T20:38</reservationDateTime>
+        <name>pero</name>
+        <tableId>1</tableId>
+    </reservationInfo>
+    <reservationInfo>
+        <reservationDateTime>2020-02-16T23:57</reservationDateTime>
+        <name>Frankica</name>
+        <tableId>3</tableId>
+    </reservationInfo>
+    <reservationInfo>
+        <reservationDateTime>2020-02-16T12:59</reservationDateTime>
+        <name>Kresica</name>
+        <tableId>9</tableId>
+    </reservationInfo>
+    <reservationInfo>
+        <reservationDateTime>2020-02-17T21:57</reservationDateTime>
+        <name>Jaxb</name>
+        <tableId>5</tableId>
+    </reservationInfo>
+    <reservationInfo>
+        <reservationDateTime>2020-02-17T15:03</reservationDateTime>
+        <name>New reservation</name>
+        <tableId>1</tableId>
+    </reservationInfo>
+    <reservationInfo>
+        <reservationDateTime>2020-02-17T22:04</reservationDateTime>
+        <name>Mirko</name>
+        <tableId>8</tableId>
     </reservationInfo>
 </reservationInfoList>

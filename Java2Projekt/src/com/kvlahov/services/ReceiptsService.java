@@ -11,6 +11,7 @@ import com.kvlahov.dal.repositories.implementations.ReceiptItemRepository;
 import com.kvlahov.dal.repositories.implementations.ReceiptRepository;
 import com.kvlahov.model.Receipt;
 import com.kvlahov.model.ReceiptItem;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -40,6 +41,26 @@ public class ReceiptsService {
                 .stream()
                 .filter(ri -> ri.getReceipt().equals(receipt))
                 .collect(Collectors.toList());
+    }
+    
+    public Receipt cancelReceipt(Receipt r) {
+        
+        Receipt canceledReceipt = new Receipt();
+        canceledReceipt.setCreatedByUser(r.getCreatedByUser());
+        canceledReceipt.setDateCreated(LocalDate.now());
+        
+        receiptRepo.add(canceledReceipt);
+        List<ReceiptItem> receiptItems = getReceiptItemsForReceipt(r);
+        
+        receiptItems.forEach(ri -> {
+            ri.setId(0);
+            ri.setReceipt(canceledReceipt);
+            ri.setAmount(ri.getAmount() * -1);
+        });
+        
+        receiptItemRepo.addRange(receiptItems);
+        
+        return canceledReceipt;        
     }
     
 }

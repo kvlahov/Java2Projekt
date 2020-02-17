@@ -41,7 +41,7 @@ public class XmlService {
         if (list != null) {
             return list.getReservations();
         }
-        return null;
+        return new ArrayList<>();
     }
 
     private void writeXML(ReservationInfoList entities, String path) {
@@ -68,9 +68,7 @@ public class XmlService {
             ReservationInfoList reservationList = (ReservationInfoList) jaxbUnmarshaller.unmarshal(new FileInputStream(path));
 
             return reservationList;
-        } catch (JAXBException ex) {
-            Logger.getLogger(XmlService.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (FileNotFoundException ex) {
+        } catch (JAXBException | FileNotFoundException ex) {
             Logger.getLogger(XmlService.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;

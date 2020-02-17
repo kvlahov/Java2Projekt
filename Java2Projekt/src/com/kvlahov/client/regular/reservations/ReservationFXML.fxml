@@ -15,12 +15,11 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
 <BorderPane xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.kvlahov.client.regular.reservations.ReservationFXMLController">
    <center>
       <ScrollPane>
          <content>
-            <FlowPane fx:id="pane" hgap="20.0" prefHeight="385.0" prefWidth="550.0" vgap="20.0">
+            <FlowPane fx:id="pane" alignment="CENTER" hgap="20.0" prefWrapLength="600.0" vgap="20.0">
                <padding>
                   <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
                </padding>
@@ -41,7 +40,7 @@
       </HBox>
    </top>
    <bottom>
-      <VBox BorderPane.alignment="CENTER">
+      <VBox style="-fx-background-color: #e7e7e7;" BorderPane.alignment="CENTER">
          <children>
             <GridPane fx:id="reservationForm" hgap="5.0" style="-fx-background-color: #e7e7e7;" vgap="5.0" visible="false">
                <columnConstraints>
@@ -64,8 +63,14 @@
                <padding>
                   <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
                </padding>
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin>
             </GridPane>
          </children>
+         <padding>
+            <Insets bottom="10.0" />
+         </padding>
       </VBox>
    </bottom>
 </BorderPane>

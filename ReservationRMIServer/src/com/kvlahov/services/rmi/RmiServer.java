@@ -43,13 +43,14 @@ public class RmiServer implements IRmiServer {
         clients = new ArrayList<>();
         reservedTables = new ArrayList<>();
         unavailableTables = new ArrayList<>();
-        reservations = FXCollections.observableArrayList();
         
         xmlService = new XmlService();
-        
-        reservedTables = xmlService.readReservations()
+        reservations = FXCollections.observableArrayList(xmlService.readReservations());
+
+        reservedTables = reservations
                 .stream()
-                .filter(t -> t.getReservationDateTime().toLocalDate().equals(LocalDate.now()))
+                .filter(r -> r.getReservationDateTime() != null)
+                .filter(r -> r.getReservationDateTime().toLocalDate().equals(LocalDate.now()))
                 .map(r -> r.getTableId())
                 .collect(Collectors.toList());
         
@@ -155,7 +156,7 @@ public class RmiServer implements IRmiServer {
             clients.remove(client);
             notifyClientNumberChanged(clients.size());
 
-            LOG.info("Removed client: ");
+            LOG.info("Removed client");
         }
     }
 
@@ -206,7 +207,7 @@ public class RmiServer implements IRmiServer {
     @Override
     public synchronized void reserveTable(long clientId, ReservationInfo reservation) {
         int id = reservation.getTableId();
-        if(reservedTables.contains(id)){
+        if(reservedTables.contains(id) || reservation.getReservationDateTime() == null){
             return;
         }
         reservedTables.add(id);
@@ -253,6 +254,7 @@ public class RmiServer implements IRmiServer {
                 });
         
         reservations
+                .filtered(r -> r.getReservationDateTime() != null)
                 .filtered(r -> r.getReservationDateTime().toLocalDate().equals(LocalDate.now()))
                 .removeIf(r -> r.getTableId() == id);
     }
@@ -262,7 +264,7 @@ public class RmiServer implements IRmiServer {
             try {
                 c.notifyNoClientsChanges(noOfClients);
             } catch (RemoteException ex) {
-                Logger.getLogger(RmiServer.class.getName()).log(Level.SEVERE, null, ex);
+                
             }
         });
     }

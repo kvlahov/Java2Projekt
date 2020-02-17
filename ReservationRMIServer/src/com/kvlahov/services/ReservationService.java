@@ -8,12 +8,8 @@ package com.kvlahov.services;
 import com.kvlahov.model.ReservationInfo;
 import com.kvlahov.services.rmi.IRmiClient;
 import com.kvlahov.services.rmi.IRmiServer;
-import com.kvlahov.services.rmi.RmiServer;
 import com.kvlahov.utilities.PropertiesManager;
 import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.Serializable;
-import java.net.Socket;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
@@ -76,6 +72,19 @@ public class ReservationService implements IRmiClient {
 
         } catch (IOException ex) {
             LOG.info(ex.getStackTrace().toString());
+            return false;
+        }
+    }
+    
+    public boolean disconnectFromServer(){
+        if(server == null) {
+            return false;
+        }
+        
+        try {
+            server.unregisterClient(this);
+            return true;
+        } catch (RemoteException ex) {
             return false;
         }
     }

@@ -6,6 +6,7 @@
 package com.kvlahov.services.rmi;
 
 import com.kvlahov.model.ReservationInfo;
+import com.kvlahov.services.XmlService;
 import java.rmi.RemoteException;
 import java.rmi.registry.LocateRegistry;
 import java.rmi.registry.Registry;
@@ -15,7 +16,12 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import com.kvlahov.utilities.PropertiesManager;
+import java.time.LocalDate;
 import java.util.function.Predicate;
+import java.util.stream.Collectors;
+import javafx.beans.Observable;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 /**
  *
@@ -30,11 +36,27 @@ public class RmiServer implements IRmiServer {
 
     private List<Integer> reservedTables;
     private List<Integer> unavailableTables;
-
+    private XmlService xmlService;
+    private ObservableList<ReservationInfo> reservations;
+    
     public RmiServer() {
         clients = new ArrayList<>();
         reservedTables = new ArrayList<>();
         unavailableTables = new ArrayList<>();
+        
+        xmlService = new XmlService();
+        reservations = FXCollections.observableArrayList(xmlService.readReservations());
+
+        reservedTables = reservations
+                .stream()
+                .filter(r -> r.getReservationDateTime() != null)
+                .filter(r -> r.getReservationDateTime().toLocalDate().equals(LocalDate.now()))
+                .map(r -> r.getTableId())
+                .collect(Collectors.toList());
+        
+        reservations.addListener((Observable c) -> {
+           xmlService.writeReservations(reservations);
+        });
     }
 
     public static void main(String[] args) {
@@ -185,7 +207,7 @@ public class RmiServer implements IRmiServer {
     @Override
     public synchronized void reserveTable(long clientId, ReservationInfo reservation) {
         int id = reservation.getTableId();
-        if(reservedTables.contains(id)){
+        if(reservedTables.contains(id)  || reservation.getReservationDateTime() == null){
             return;
         }
         reservedTables.add(id);
@@ -205,6 +227,8 @@ public class RmiServer implements IRmiServer {
                         Logger.getLogger(RmiServer.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 });
+        
+        reservations.add(reservation);
     }
 
     @Override
@@ -228,6 +252,11 @@ public class RmiServer implements IRmiServer {
                         Logger.getLogger(RmiServer.class.getName()).log(Level.SEVERE, null, ex);
                     }
                 });
+        
+        reservations
+                .filtered(r -> r.getReservationDateTime() != null)
+                .filtered(r -> r.getReservationDateTime().toLocalDate().equals(LocalDate.now()))
+                .removeIf(r -> r.getTableId() == id);
     }
 
     private void notifyClientNumberChanged(int noOfClients) {
@@ -235,7 +264,7 @@ public class RmiServer implements IRmiServer {
             try {
                 c.notifyNoClientsChanges(noOfClients);
             } catch (RemoteException ex) {
-                Logger.getLogger(RmiServer.class.getName()).log(Level.SEVERE, null, ex);
+                
             }
         });
     }

@@ -6,7 +6,9 @@
 package com.kvlahov.client.regular.reservations;
 
 import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXTextField;
 import com.jfoenix.controls.JFXTimePicker;
+import com.jfoenix.validation.RequiredFieldValidator;
 import com.kvlahov.model.ReservationInfo;
 import com.kvlahov.model.enums.TableStateEnum;
 import com.kvlahov.model.interfaces.IControllerWithModel;
@@ -29,6 +31,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
+import javafx.stage.Stage;
 
 /**
  * FXML Controller class
@@ -48,7 +51,7 @@ public class ReservationFXMLController implements Initializable, IControllerWith
     @FXML
     private JFXButton btnCancel;
     @FXML
-    private TextField tfName;
+    private JFXTextField tfName;
     @FXML
     private JFXTimePicker tpTime;
 
@@ -72,6 +75,8 @@ public class ReservationFXMLController implements Initializable, IControllerWith
         pane.getChildren().addAll(tables);
         reservation = new ReservationInfo();
 
+        setupReservationForm();
+
     }
 
     private ReservationTableComponent initTableComponent(int i) {
@@ -82,13 +87,20 @@ public class ReservationFXMLController implements Initializable, IControllerWith
                     reservationService.freeTable(table.getTableId());
                     break;
                 case RESERVED:
-                    reservationService.reserveTable(reservation);
+                    if (reservation != null || reservation.getReservationDateTime() != null) {
+                        reservationService.reserveTable(reservation);
+                    }
                     break;
                 case UNAVAILABLE:
                     reservationService.lockTable(table.getTableId());
                     break;
             }
 
+            pane.getScene().getWindow().setOnCloseRequest(e -> {
+                btnCancel.fire();
+                reservationService.disconnectFromServer();
+                ((Stage) e.getSource()).close();
+            });
         });
 
         table.setOnMouseClickEvent(e -> {
@@ -112,20 +124,26 @@ public class ReservationFXMLController implements Initializable, IControllerWith
         if (selectedTable == null) {
             return;
         }
-        
+
+        if (!tfName.validate() || !tpTime.validate()) {
+            return;
+        }
+
         reservation = new ReservationInfo();
         reservation.setTableId(selectedTable.getTableId());
         reservation.setName(tfName.getText());
         LocalDateTime dt = LocalDateTime.of(LocalDate.now(), tpTime.getValue());
         reservation.setReservationDateTime(dt);
-        
-        
+
         selectedTable.setTableState(TableStateEnum.RESERVED);
         reservationForm.setVisible(false);
     }
 
     @FXML
     public void handleCancelClick(ActionEvent e) {
+        if (selectedTable == null) {
+            return;
+        }
         selectedTable.setTableState(TableStateEnum.FREE);
 
         selectedTable = null;
@@ -171,6 +189,11 @@ public class ReservationFXMLController implements Initializable, IControllerWith
                 }
             });
         };
+    }
+
+    private void setupReservationForm() {
+        tfName.setValidators(new RequiredFieldValidator("Name is required"));
+        tpTime.setValidators(new RequiredFieldValidator("Time is required"));
     }
 
 }

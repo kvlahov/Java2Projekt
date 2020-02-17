@@ -12,15 +12,10 @@ import com.kvlahov.dal.repositories.implementations.UserRepository;
 import com.kvlahov.model.Category;
 import com.kvlahov.model.Product;
 import com.kvlahov.model.RegistryUser;
-import com.kvlahov.model.ReservationInfo;
 import com.kvlahov.model.User;
 import com.kvlahov.model.enums.UserRoleEnum;
-import com.kvlahov.services.XmlService;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
@@ -54,6 +49,7 @@ public class Main extends Application {
 
         Scene scene = new Scene(root);
 
+        stage.setTitle("Restaurant Manager Pro 2020");
         stage.setScene(scene);
         stage.setOnCloseRequest(e -> {
             Platform.exit();
