@@ -11,7 +11,7 @@
 
 <BorderPane prefHeight="433.0" prefWidth="600.0" styleClass="border-pane" stylesheets="@../../resources/adminHome.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.kvlahov.client.admin.AdminFXMLController">
    <center>
-      <AnchorPane fx:id="rootPane" prefHeight="200.0" prefWidth="200.0" />
+      <AnchorPane fx:id="rootPane" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: white;" />
    </center>
    <left>
       <VBox prefHeight="375.0" prefWidth="132.0" styleClass="sidebar" BorderPane.alignment="CENTER">

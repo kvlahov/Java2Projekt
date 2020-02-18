@@ -188,7 +188,7 @@ public class ProductsFXMLController implements Initializable {
 //            }
 //        });
         MyCellEditHandler<Product, Double> priceHandler = new MyCellEditHandler<>(
-                newVal -> newVal > 0,
+                newVal -> newVal != null && newVal > 0,
                 "Price must be a number greater than 0!",
                 (p, newVal) -> {
                     p.setPrice(newVal);
@@ -216,6 +216,7 @@ public class ProductsFXMLController implements Initializable {
         categoryActionButtonColumn.setCellFactory(ActionButtonTableCell.forTableColumn("Delete", c -> {
             UIHelper.showWarningDialog("Are you sure you want to remove this category and all of its products?", b -> {
                 categories.remove(c);
+                products.removeIf(p -> p.getCategory().equals(c));
                 registryService.deleteCategory(c);
             });
         }));
@@ -223,9 +224,14 @@ public class ProductsFXMLController implements Initializable {
         MyCellEditHandler<Category, String> handler = new MyCellEditHandler<>();
         handler.setAlertMessage("Category already exists");
         handler.setValidationPredicate(newVal -> !categoryExists(newVal) && !newVal.isEmpty());
-        handler.setValidationSuccessConsumer((rowVal, celVal) -> {
-            rowVal.setName(celVal);
-            registryService.updateCategory(rowVal);
+        handler.setValidationSuccessConsumer((category, newVal) -> {
+            String oldName = category.getName();
+            category.setName(newVal);
+            if(registryService.updateCategory(category)){
+                products.stream()
+                        .filter(p -> p.getCategory().getName().equals(oldName))
+                        .forEach(p -> p.setCategory(category));
+            }
         });
 
         categoryNameColumn.setOnEditCommit(handler);

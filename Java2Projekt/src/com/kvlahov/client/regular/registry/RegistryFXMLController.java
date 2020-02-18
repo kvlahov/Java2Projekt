@@ -83,7 +83,8 @@ public class RegistryFXMLController implements Initializable {
 
     @FXML
     private JFXTabPane tabPaneCategories;
-
+    @FXML
+    private JFXButton btnCash;
     @FXML
     private Label total;
 
@@ -109,6 +110,9 @@ public class RegistryFXMLController implements Initializable {
 
     @FXML
     public void handleCashClick(ActionEvent event) {
+        if(receiptItems == null || receiptItems.isEmpty()) {
+            return;
+        }
         Alert alert = new Alert(Alert.AlertType.INFORMATION, "Printing receipt...");
         alert.setHeaderText(null);
         alert.show();
@@ -150,6 +154,7 @@ public class RegistryFXMLController implements Initializable {
                     total.setText(String.valueOf(sum));
 
                 }
+                btnCash.setDisable(receiptItems.isEmpty());
             }
         });
 

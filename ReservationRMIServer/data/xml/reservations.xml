@@ -40,4 +40,19 @@
         <name>Mirko</name>
         <tableId>8</tableId>
     </reservationInfo>
+    <reservationInfo>
+        <reservationDateTime>2020-02-17T16:20</reservationDateTime>
+        <name>Nikola Skejđ</name>
+        <tableId>4</tableId>
+    </reservationInfo>
+    <reservationInfo>
+        <reservationDateTime>2020-02-18T10:46</reservationDateTime>
+        <name>Kreso</name>
+        <tableId>1</tableId>
+    </reservationInfo>
+    <reservationInfo>
+        <reservationDateTime>2020-02-18T11:03</reservationDateTime>
+        <name>Kavopija</name>
+        <tableId>3</tableId>
+    </reservationInfo>
 </reservationInfoList>

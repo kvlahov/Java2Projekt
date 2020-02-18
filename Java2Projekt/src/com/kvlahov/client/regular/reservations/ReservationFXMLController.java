@@ -13,6 +13,7 @@ import com.kvlahov.model.ReservationInfo;
 import com.kvlahov.model.enums.TableStateEnum;
 import com.kvlahov.model.interfaces.IControllerWithModel;
 import com.kvlahov.services.ReservationService;
+import com.kvlahov.utilities.UIHelper;
 import java.net.URL;
 import java.rmi.RemoteException;
 import java.time.LocalDate;
@@ -137,6 +138,7 @@ public class ReservationFXMLController implements Initializable, IControllerWith
 
         selectedTable.setTableState(TableStateEnum.RESERVED);
         reservationForm.setVisible(false);
+        selectedTable = null;
     }
 
     @FXML
@@ -161,6 +163,12 @@ public class ReservationFXMLController implements Initializable, IControllerWith
 
         reservationService.setNoClientsChangedConsumer(no -> {
             Platform.runLater(() -> lblConnectedClients.setText("" + no));
+        });
+        reservationService.setHandleRemoteException(msg -> {
+            Platform.runLater(() -> {
+                UIHelper.showInfoAlert("Connection to server lost!");
+                ((Stage)pane.getScene().getWindow()).close();
+            });
         });
 
         try {

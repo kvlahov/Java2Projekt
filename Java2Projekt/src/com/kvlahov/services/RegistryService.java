@@ -70,7 +70,14 @@ public class RegistryService {
         categoryRepo.add(c);
     }
     public boolean updateCategory(Category c) {
-        return categoryRepo.update(c.getId(), c) == 1;
+        boolean success = categoryRepo.update(c.getId(), c) == 1;
+        if(success) {
+            getProductsForCategory(c).forEach(p -> {
+                p.setCategory(c);
+                productRepo.update(p.getId(), p);
+            });
+        }
+        return success;
     }
     public void deleteCategory(Category c) {
         getProductsForCategory(c).forEach(p -> productRepo.delete(p.getId()));

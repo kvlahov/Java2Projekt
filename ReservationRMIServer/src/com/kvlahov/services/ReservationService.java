@@ -35,6 +35,8 @@ public class ReservationService implements IRmiClient {
     private Consumer<Integer> tableReservedConsumer;
     private Consumer<Integer> tableFreedConsumer;
     private Consumer<Integer> noClientsChangedConsumer;
+    
+    private Consumer<String> handleRemoteException;
 
     private boolean registerClientImmidiately = true;
 
@@ -71,7 +73,6 @@ public class ReservationService implements IRmiClient {
             return true;
 
         } catch (IOException ex) {
-            LOG.info(ex.getStackTrace().toString());
             return false;
         }
     }
@@ -198,11 +199,19 @@ public class ReservationService implements IRmiClient {
         this.server.registerClient((IRmiClient) UnicastRemoteObject.exportObject(this, 0));
     }
 
+    public Consumer<String> getHandleRemoteException() {
+        return handleRemoteException;
+    }
+
+    public void setHandleRemoteException(Consumer<String> handleRemoteException) {
+        this.handleRemoteException = handleRemoteException;
+    }
+
     public void lockTable(int tableId) {
         try {
             server.lockTable(id, tableId);
         } catch (RemoteException ex) {
-            Logger.getLogger(ReservationService.class.getName()).log(Level.SEVERE, null, ex);
+            handleRemoteException.accept(ex.getMessage());
         }
     }
 
@@ -210,7 +219,7 @@ public class ReservationService implements IRmiClient {
         try {
             server.unlockTable(id, tableId);
         } catch (RemoteException ex) {
-            Logger.getLogger(ReservationService.class.getName()).log(Level.SEVERE, null, ex);
+            handleRemoteException.accept(ex.getMessage());
         }
     }
 
@@ -218,7 +227,7 @@ public class ReservationService implements IRmiClient {
         try {
             server.reserveTable(id, reservation);
         } catch (RemoteException ex) {
-            Logger.getLogger(ReservationService.class.getName()).log(Level.SEVERE, null, ex);
+            handleRemoteException.accept(ex.getMessage());
         }
     }
 
@@ -226,7 +235,7 @@ public class ReservationService implements IRmiClient {
         try {
             server.freeTable(id, tableId);
         } catch (RemoteException ex) {
-            Logger.getLogger(ReservationService.class.getName()).log(Level.SEVERE, null, ex);
+            handleRemoteException.accept(ex.getMessage());
         }
     }
 
